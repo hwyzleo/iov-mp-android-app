@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">iov</string>
+    <string name="community">探索</string>
+    <string name="service">服务</string>
+    <string name="vehicle">爱车</string>
+    <string name="mall">商城</string>
+    <string name="my">我的</string>
+</resources>

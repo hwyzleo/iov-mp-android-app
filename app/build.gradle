@@ -1,0 +1,202 @@
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    id "kotlin-kapt"
+    id "kotlin-parcelize"
+    id "com.google.dagger.hilt.android"
+
+    id "jacoco"
+    // junit5 doesn't support android projects out of the box
+    id "de.mannodermaus.android-junit5"
+}
+
+android {
+    compileSdkVersion 33
+
+    defaultConfig {
+        testInstrumentationRunnerArguments runnerBuilder: 'de.mannodermaus.junit5.AndroidJUnit5Builder'
+        applicationId "net.hwyz.iov.mp.app"
+        minSdkVersion 24
+        targetSdkVersion 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "ApiKey", "\"cd4ff600\"")
+        buildConfigField("String", "BASE_URL", "\"https://www.omdbapi.com/\"")
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    buildFeatures {
+        compose true
+        buildConfig = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    testOptions {
+        junitPlatform {
+            filters {
+                engines {
+                    include 'spek2'
+                }
+            }
+            jacocoOptions {
+                // here goes all jacoco config, for example
+                html.enabled = true
+                xml.enabled = false
+                csv.enabled = false
+            }
+        }
+        unitTests.all {
+            testLogging.events = ["passed", "skipped", "failed"]
+        }
+    }
+    packagingOptions {
+        resources {
+            excludes += ['META-INF/LICENSE', 'META-INF/LICENSE.md', 'META-INF/LICENSE-notice.md', 'META-INF/NOTICE', 'META-INF/ASL2.0', 'META-INF/LICENSE.txt', 'META-INF/NOTICE.txt', 'META-INF/LICENSE-FIREBASE.txt', 'META-INF/DEPENDENCIES.txt', 'META-INF/rxkotlin.properties', 'META-INF/AL2.0', 'META-INF/LGPL2.1']
+        }
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "$compose_compiler_version"
+    }
+
+    namespace 'net.hwyz.iov.mp.app'
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'androidx.lifecycle:lifecycle-reactivestreams-ktx:2.4.1'
+    implementation "androidx.navigation:navigation-compose:2.5.3"
+
+    implementation "androidx.compose.runtime:runtime:$compose_compiler_version"
+    implementation "androidx.compose.runtime:runtime-livedata:$compose_compiler_version"
+    implementation "androidx.compose.runtime:runtime-rxjava3:$compose_compiler_version"
+    implementation "androidx.compose.compiler:compiler:$compose_compiler_version"
+    implementation "androidx.compose.foundation:foundation:$compose_compiler_version"
+    implementation "androidx.compose.ui:ui:$compose_compiler_version"
+    implementation "androidx.compose.ui:ui-tooling:$compose_compiler_version"
+    implementation "androidx.compose.material:material:$compose_compiler_version"
+    implementation "io.coil-kt:coil-compose:2.4.0"
+
+    implementation "androidx.compose.foundation:foundation-layout:$compose_compiler_version"
+
+    implementation "androidx.constraintlayout:constraintlayout-compose:1.0.0"
+
+    /** accompanist辅助插件 */
+    implementation "com.google.accompanist:accompanist-insets:$accompanistVersion"
+    implementation "com.google.accompanist:accompanist-coil:0.15.0"
+    //系统ui控制器
+    implementation "com.google.accompanist:accompanist-systemuicontroller:$accompanistVersion"
+    //viewPager
+    implementation "com.google.accompanist:accompanist-pager:0.20.2"
+    implementation "com.google.accompanist:accompanist-pager-indicators:$accompanistVersion"
+    //下拉刷新
+    implementation "com.google.accompanist:accompanist-swiperefresh:$accompanistVersion"
+    //流式布局
+    implementation "com.google.accompanist:accompanist-flowlayout:$accompanistVersion"
+    //placeholder
+    implementation "com.google.accompanist:accompanist-placeholder-material:$accompanistVersion"
+
+    //Dagger Hilt
+    implementation "com.google.dagger:hilt-android:$dagger_hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$dagger_hilt_version"
+    implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
+    kapt "androidx.hilt:hilt-compiler:1.0.0"
+    implementation "androidx.activity:activity-ktx:1.4.0"
+
+    //RxJava
+    implementation "io.reactivex.rxjava3:rxjava:3.0.4"
+    implementation "io.reactivex.rxjava3:rxandroid:3.0.0"
+
+    //Retrofit
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.5.0"
+    implementation "com.github.akarnokd:rxjava3-retrofit-adapter:3.0.0"
+
+    implementation "com.airbnb.android:lottie-compose:5.0.2"
+
+    implementation "io.coil-kt:coil-compose:1.4.0"
+
+    //Timber
+    implementation "com.jakewharton.timber:timber:4.7.1"
+
+    //Test
+    implementation "org.mockito:mockito-core:3.3.3"
+    implementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
+    androidTestImplementation "org.mockito:mockito-android:3.3.3"
+    // assertion
+    testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
+
+    // spek2
+    testImplementation "org.spekframework.spek2:spek-dsl-jvm:$spek_version"
+    testImplementation "org.spekframework.spek2:spek-runner-junit5:$spek_version"
+    testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+
+    // (Required) Writing and executing Unit Tests on the JUnit Platform
+    testImplementation "org.junit.jupiter:junit-jupiter-api:5.8.2"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.8.2"
+
+    // (Optional) If you need "Parameterized Tests"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:5.8.2"
+
+    // (Optional) If you also have JUnit 4-based tests
+    testImplementation "junit:junit:4.13.2"
+    testRuntimeOnly "org.junit.vintage:junit-vintage-engine:5.8.2"
+
+    //Android Test
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation "androidx.test:runner:1.2.0"
+    androidTestRuntimeOnly("de.mannodermaus.junit5:android-test-runner:1.3.0")
+
+    testImplementation("junit:junit:4.13.1")
+    androidTestImplementation("androidx.test:rules:1.4.0")
+    androidTestRuntimeOnly("androidx.test:runner:1.4.0")
+    androidTestImplementation("androidx.compose.ui:ui-test:$compose_compiler_version")
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_compiler_version"
+
+    implementation "androidx.activity:activity-compose:1.4.0"
+
+    //Room DB
+    def room_version = "2.4.2"
+
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+    implementation "androidx.room:room-rxjava3:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
+    //数据保存，用于cookie持久化
+    implementation "androidx.datastore:datastore-preferences:$datastoreVersion"
+    implementation "androidx.datastore:datastore-core:$datastoreVersion"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:1.5.31"
+
+    //paging分页库
+    implementation "androidx.paging:paging-runtime:$pagingVersion"
+    testImplementation "androidx.paging:paging-common:$pagingVersion"
+    implementation "androidx.paging:paging-compose:$pagingComposeVersion"
+}
