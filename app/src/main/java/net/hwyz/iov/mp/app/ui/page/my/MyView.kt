@@ -70,15 +70,7 @@ fun MyScreen(
         modifier = Modifier.fillMaxSize()
     ) {
         if (!isLogin.value) {
-            MyAvatar(
-                nickname = "注册 / 登录",
-                avatar = null
-            ) {
-                RouteUtils.navTo(
-                    navCtrl = navCtrl,
-                    destinationName = RouteName.LOGIN
-                )
-            }
+            MyViewNotLogin(navCtrl = navCtrl, intent = intent, viewState = viewState)
         } else {
             MyAvatar(
                 nickname = AppUserUtil.nickname,
@@ -90,20 +82,7 @@ fun MyScreen(
                 )
             }
         }
-        Column {
-            TitleList(iconRes = Icons.Default.List, title = "我的积分") {}
-            TitleList(iconRes = Icons.Default.ShoppingCart, title = "我的订单") {}
-        }
-        Spacer(modifier = Modifier.padding(bottom = 20.dp))
-        Column {
-            TitleList(iconRes = Icons.Default.Settings, title = "设置") {}
-            if (isLogin.value) {
-                TitleList(iconRes = Icons.Default.Settings, title = "退出") {
-                    AppUserUtil.onLogOut()
-                    isLogin.value = false
-                }
-            }
-        }
+
     }
 }
 

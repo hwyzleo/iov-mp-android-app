@@ -25,5 +25,5 @@ val H7 = 12.sp  //提示语尺寸
 val ToolBarTitleSize = 18.sp
 
 val cardCorner = 5.dp   //卡片的圆角
-val buttonCorner = 3.dp //按钮的圆角
-val buttonHeight = 36.dp //按钮的高度
+val buttonCorner = 18.dp //按钮的圆角
+val buttonHeight = 40.dp //按钮的高度

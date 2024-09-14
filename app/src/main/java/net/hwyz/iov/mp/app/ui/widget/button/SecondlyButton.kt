@@ -10,7 +10,7 @@ fun SecondlyButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
-    AppButton(
+    RoundedCornerButton(
         text = text,
         modifier = modifier,
         textColor = AppTheme.colors.textSecondary,
