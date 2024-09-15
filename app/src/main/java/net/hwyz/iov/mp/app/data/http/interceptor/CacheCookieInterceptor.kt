@@ -1,4 +1,4 @@
-package net.hwyz.iov.data.http.interceptor
+package net.hwyz.iov.mp.app.data.http.interceptor
 
 import net.hwyz.iov.mp.app.data.store.DataStoreUtils
 import okhttp3.Interceptor

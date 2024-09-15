@@ -17,9 +17,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import net.hwyz.iov.mp.app.ui.theme.buttonCorner
-import net.hwyz.iov.mp.app.ui.theme.buttonHeight
 
+/**
+ * 圆角按钮
+ */
 @Composable
 fun RoundedCornerButton(
     text: String,

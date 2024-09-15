@@ -21,14 +21,16 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import net.hwyz.iov.mp.app.ui.page.common.BottomNavBar
+import net.hwyz.iov.mp.app.ui.page.common.SplashView
 import net.hwyz.iov.mp.app.ui.page.login.LoginView
 import net.hwyz.iov.mp.app.ui.page.my.MyView
 import net.hwyz.iov.mp.app.ui.page.my.profile.ProfileView
+import net.hwyz.iov.mp.app.ui.page.my.setting.MySettingView
 import net.hwyz.iov.mp.app.ui.theme.AppTheme
 import net.hwyz.iov.mp.app.ui.widget.bar.AppSnackBar
-import net.hwyz.iov.mp.app.ui.page.common.BottomNavBar
-import net.hwyz.iov.mp.app.ui.page.common.SplashView
 import net.hwyz.iov.mp.app.ui.widget.view.EmptyView
+import net.hwyz.iov.mp.app.utils.AppUserUtil
 
 /**
  * 主页
@@ -108,6 +110,10 @@ fun HomeEntry() {
                         composable(route = RouteName.MY) {
                             MyView(navCtrl, scaffoldState)
                         }
+                        // 我的 - 设置
+                        composable(route = RouteName.MY_SETTING) {
+                            MySettingView(navCtrl, scaffoldState, AppUserUtil.isLogged)
+                        }
                         // 用户资料
                         composable(route = RouteName.PROFILE) {
                             ProfileView(navCtrl, scaffoldState)
@@ -139,6 +145,7 @@ object RouteName {
     const val VEHICLE = "vehicle"
     const val MALL = "mall"
     const val MY = "my"
+    const val MY_SETTING = "my_setting"
     const val PROFILE = "profile"
     const val LOGIN = "login"
 }

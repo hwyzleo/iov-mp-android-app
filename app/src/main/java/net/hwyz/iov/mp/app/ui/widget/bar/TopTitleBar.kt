@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -19,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.tooling.preview.Preview
 import net.hwyz.iov.mp.app.ui.theme.AppTheme
 import net.hwyz.iov.mp.app.ui.theme.H5
 import net.hwyz.iov.mp.app.ui.theme.ToolBarHeight
@@ -50,8 +49,7 @@ fun TopTitleBar(
                     null,
                     Modifier
                         .clickable(onClick = onBack)
-                        .align(Alignment.CenterVertically)
-                        .padding(12.dp),
+                        .align(Alignment.CenterVertically),
                     tint = AppTheme.colors.icon
                 )
             }
@@ -62,7 +60,6 @@ fun TopTitleBar(
                     color = AppTheme.colors.mainColor,
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
-                        .padding(horizontal = 20.dp)
                         .clickable { onRightClick?.invoke() }
                 )
             }
@@ -74,7 +71,6 @@ fun TopTitleBar(
                     tint = AppTheme.colors.textPrimary,
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
-                        .padding(end = 12.dp)
                         .clickable {
                             onRightClick?.invoke()
                         })
@@ -83,8 +79,7 @@ fun TopTitleBar(
         Text(
             text = title,
             modifier = Modifier
-                .align(Alignment.Center)
-                .padding(horizontal = 40.dp),
+                .align(Alignment.Center),
             color = AppTheme.colors.textPrimary,
             textAlign = TextAlign.Center,
             fontSize = if (title.length > 14) H5 else ToolBarTitleSize,
@@ -93,4 +88,13 @@ fun TopTitleBar(
         )
 
     }
+}
+
+@Preview
+@Composable
+fun TopTitleBarPreview() {
+    TopTitleBar(
+        title = "标题",
+        onBack = {}
+    )
 }

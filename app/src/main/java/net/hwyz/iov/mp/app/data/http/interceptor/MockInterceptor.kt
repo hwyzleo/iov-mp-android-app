@@ -1,4 +1,4 @@
-package net.hwyz.iov.data.http.interceptor
+package net.hwyz.iov.mp.app.data.http.interceptor
 
 import com.google.gson.Gson
 import net.hwyz.iov.mp.app.data.bean.AccountInfo
@@ -66,7 +66,7 @@ class MockInterceptor : Interceptor {
                 data = LoginResponse(
                     mobile = "13917288107",
                     nickname = "hwyz_leo",
-                    avatar = "https://iov-public-1253442587.cos.ap-shanghai.myqcloud.com/account-service/avatar-EqeOCSvUejtJlIiNcNGmo.jpeg",
+                    avatar = "https://pic.imgdb.cn/item/66e667a0d9c307b7e93075e8.png",
                     token = "token",
                     tokenExpires = System.currentTimeMillis() + 1000000000,
                     refreshToken = "refreshToken",
@@ -86,7 +86,7 @@ class MockInterceptor : Interceptor {
                 data = AccountInfo(
                     mobile = "13917288107",
                     nickname = "hwyz_leo",
-                    avatar = "https://iov-public-1253442587.cos.ap-shanghai.myqcloud.com/account-service/avatar-EqeOCSvUejtJlIiNcNGmo.jpeg",
+                    avatar = "https://pic.imgdb.cn/item/66e667a0d9c307b7e93075e8.png",
                     gender = "MALE"
                 )
             )

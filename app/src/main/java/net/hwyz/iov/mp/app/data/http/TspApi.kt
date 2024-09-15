@@ -2,7 +2,9 @@ package net.hwyz.iov.mp.app.data.http
 
 import net.hwyz.iov.mp.app.data.bean.AccountInfo
 import net.hwyz.iov.mp.app.data.bean.LoginResponse
+import net.hwyz.iov.mp.app.data.bean.LoginVerifyCodeRequest
 import net.hwyz.iov.mp.app.data.bean.TspResponse
+import net.hwyz.iov.mp.app.data.bean.VerifyCodeLoginRequest
 import retrofit2.http.*
 
 /**
@@ -10,29 +12,18 @@ import retrofit2.http.*
  *
  * @author hwyz_leo
  */
-interface HttpService {
-
-    companion object {
-//        const val url = "http://192.168.2.223:8081"
-//        const val url = "http://10.0.68.161:8081"
-        const val url = "http://mock"
-    }
+interface TspApi {
 
     // 发送登录验证码
-    @FormUrlEncoded
-    @POST("/account/mp/login/sendVerifyCode")
+    @POST("/mp/login/action/sendSmsVerifyCode")
     suspend fun sendLoginVerifyCode(
-        @Field("countryRegionCode") countryRegionCode: String,
-        @Field("mobile") mobile: String
+        @Body request: LoginVerifyCodeRequest
     ): TspResponse<Void>
 
     // 验证码登录
-    @FormUrlEncoded
-    @POST("/account/mp/login/verifyCodeLogin")
+    @POST("/mp/login/action/smsVerifyCodeLogin")
     suspend fun verifyCodeLogin(
-        @Field("countryRegionCode") countryRegionCode: String,
-        @Field("mobile") mobile: String,
-        @Field("verifyCode") verifyCode: String
+        @Body request: VerifyCodeLoginRequest
     ): TspResponse<LoginResponse>
 
     // 获取账号信息

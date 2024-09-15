@@ -1,11 +1,11 @@
 package net.hwyz.iov.mp.app.data.http
 
 import android.annotation.SuppressLint
-import net.hwyz.iov.data.http.interceptor.CacheCookieInterceptor
-import net.hwyz.iov.data.http.interceptor.LogInterceptor
-import net.hwyz.iov.data.http.interceptor.MockInterceptor
-import net.hwyz.iov.data.http.interceptor.SetCookieInterceptor
-import net.hwyz.iov.data.http.interceptor.SetHeaderInterceptor
+import net.hwyz.iov.mp.app.data.http.interceptor.CacheCookieInterceptor
+import net.hwyz.iov.mp.app.data.http.interceptor.LogInterceptor
+import net.hwyz.iov.mp.app.data.http.interceptor.MockInterceptor
+import net.hwyz.iov.mp.app.data.http.interceptor.SetCookieInterceptor
+import net.hwyz.iov.mp.app.data.http.interceptor.SetHeaderInterceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -14,24 +14,26 @@ import java.security.cert.X509Certificate
 import java.util.concurrent.TimeUnit
 import javax.net.ssl.*
 
-object ApiCall {
+object TspNetworkManager {
 
     /**
      * 请求超时时间
      */
     private const val DEFAULT_TIMEOUT = 30000
-    private lateinit var SERVICE: HttpService
+    private lateinit var SERVICE: TspApi
+    private const val TSP_URL = "http://192.168.2.223:8081"
+
 
     //手动创建一个OkHttpClient并设置超时时间
-    val retrofit: HttpService
+    val retrofit: TspApi
         get() {
-            if (!ApiCall::SERVICE.isInitialized) {
+            if (!TspNetworkManager::SERVICE.isInitialized) {
                 SERVICE = Retrofit.Builder()
                     .client(okHttp)
                     .addConverterFactory(GsonConverterFactory.create())
-                    .baseUrl(HttpService.url)
+                    .baseUrl(TSP_URL)
                     .build()
-                    .create(HttpService::class.java)
+                    .create(TspApi::class.java)
             }
             return SERVICE
         }

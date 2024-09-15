@@ -1,12 +1,14 @@
 package net.hwyz.iov.mp.app.ui.page.login
 
 import net.hwyz.iov.mp.app.base.MviActionProcessor
-import net.hwyz.iov.mp.app.data.http.HttpService
+import net.hwyz.iov.mp.app.data.bean.LoginVerifyCodeRequest
+import net.hwyz.iov.mp.app.data.bean.VerifyCodeLoginRequest
+import net.hwyz.iov.mp.app.data.http.TspApi
 import net.hwyz.iov.mp.app.utils.AppUserUtil
 import javax.inject.Inject
 
 open class LoginProcessor @Inject constructor(
-    private var service: HttpService,
+    private var service: TspApi,
 ) :
     MviActionProcessor<LoginAction, LoginResult> {
 
@@ -33,7 +35,12 @@ open class LoginProcessor @Inject constructor(
 
     private suspend fun sendVerifyCode(countryRegionCode: String, mobile: String): LoginResult {
         return try {
-            val response = service.sendLoginVerifyCode(countryRegionCode.trim(), mobile.trim())
+            val response = service.sendLoginVerifyCode(
+                LoginVerifyCodeRequest(
+                    countryRegionCode.trim(),
+                    mobile.trim()
+                )
+            )
             if (response.code == 0) {
                 LoginResult.SendVerifyCode.Success(countryRegionCode, mobile)
             } else {
@@ -51,7 +58,11 @@ open class LoginProcessor @Inject constructor(
     ): LoginResult {
         return try {
             val response =
-                service.verifyCodeLogin(countryRegionCode.trim(), mobile.trim(), verifyCode.trim())
+                service.verifyCodeLogin(
+                    VerifyCodeLoginRequest(
+                        countryRegionCode.trim(), mobile.trim(), verifyCode.trim()
+                    )
+                )
             if (response.code == 0) {
                 AppUserUtil.onLogin(response.data!!)
                 LoginResult.VerifyCodeLogin.Success

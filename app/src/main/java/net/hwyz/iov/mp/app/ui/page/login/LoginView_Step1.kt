@@ -56,122 +56,126 @@ fun LoginStep1View(
     var isSelect = remember { mutableStateOf(false) }
     var currentSelectImage = remember { mutableStateOf(R.drawable.black_unselect) }
     var showDialog = remember { mutableStateOf(false) }
-    Column(
+    Box(
         modifier = Modifier
-            .fillMaxSize()
             .background(AppTheme.colors.themeUi)
-            .pointerInput(Unit) {
-                detectTapGestures(
-                    onPress = {
-                        keyboardController?.hide()
-                    }
-                )
-            },
+            .padding(20.dp)
     ) {
-        TopTitleBar(onBack = { navCtrl.back() })
-        Text(
-            text = "请输入手机号", fontSize = 20.sp,
-            modifier = Modifier.padding(start = 20.dp, top = 10.dp, bottom = 30.dp)
-        )
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.height(40.dp)
-        ) {
-            Text(
-                text = "+86",
-                fontSize = 20.sp,
-                modifier = Modifier
-                    .width(65.dp)
-                    .padding(start = 20.dp)
-            )
-            Box(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .width(0.5.dp)
-                    .background(Color.Black)
-            )
-            MobileTextField(
-                value = mobile.value,
-                onValueChange = { newValue ->
-                    mobile.value = newValue
-                    isMobileFilled.value = newValue.text.length == 13
-                    btnBgColor.value = if (isMobileFilled.value) Color.Black else Color.Gray
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 10.dp),
-                fontSize = 20.sp
-            )
-        }
-        Spacer(modifier = Modifier.padding(bottom = 30.dp))
-        RoundedCornerButton(
-            text = "获取验证码",
-            bgColor = btnBgColor.value,
-            textColor = Color.White,
-            modifier = Modifier.padding(horizontal = 20.dp)
-        ) {
-            keyboardController?.hide()
-            if (!isSelect.value || !isMobileFilled.value) {
-                showDialog.value = true
-            } else {
-                intent(
-                    LoginIntent.SendVerifyCode(
-                        countryRegionCode = "+86",
-                        mobile = mobile.value.text
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(AppTheme.colors.themeUi)
+                .pointerInput(Unit) {
+                    detectTapGestures(
+                        onPress = {
+                            keyboardController?.hide()
+                        }
                     )
+                },
+        ) {
+            TopTitleBar(onBack = { navCtrl.back() })
+            Text(
+                text = "请输入手机号", fontSize = 20.sp,
+                modifier = Modifier.padding(top = 10.dp, bottom = 30.dp)
+            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.height(40.dp)
+            ) {
+                Text(
+                    text = "+86",
+                    fontSize = 20.sp,
+                    modifier = Modifier
+                        .width(65.dp)
+                )
+                Box(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .width(0.5.dp)
+                        .background(Color.Black)
+                )
+                MobileTextField(
+                    value = mobile.value,
+                    onValueChange = { newValue ->
+                        mobile.value = newValue
+                        isMobileFilled.value = newValue.text.length == 13
+                        btnBgColor.value = if (isMobileFilled.value) Color.Black else Color.Gray
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 10.dp),
+                    fontSize = 20.sp
                 )
             }
-        }
-        Row(modifier = Modifier.padding(20.dp, 10.dp, 20.dp, 0.dp)) {
-            Column(modifier = Modifier.padding(end = 5.dp)) {
-                Spacer(modifier = Modifier.padding(top = 3.dp))
-                Image(
-                    painter = painterResource(id = currentSelectImage.value),
-                    contentDescription = "",
-                    modifier = Modifier
-                        .clickable {
-                            if (!isSelect.value) {
-                                isSelect.value = true
-                                currentSelectImage.value = R.drawable.red_select
-                            } else {
-                                isSelect.value = false
-                                currentSelectImage.value = R.drawable.black_unselect
+            Spacer(modifier = Modifier.padding(bottom = 30.dp))
+            RoundedCornerButton(
+                text = "获取验证码",
+                bgColor = btnBgColor.value,
+                textColor = Color.White
+            ) {
+                keyboardController?.hide()
+                if (!isSelect.value || !isMobileFilled.value) {
+                    showDialog.value = true
+                } else {
+                    intent(
+                        LoginIntent.SendVerifyCode(
+                            countryRegionCode = "+86",
+                            mobile = mobile.value.text
+                        )
+                    )
+                }
+            }
+            Row(modifier = Modifier.padding(top = 10.dp)) {
+                Column(modifier = Modifier.padding(end = 5.dp)) {
+                    Spacer(modifier = Modifier.padding(top = 3.dp))
+                    Image(
+                        painter = painterResource(id = currentSelectImage.value),
+                        contentDescription = "",
+                        modifier = Modifier
+                            .clickable {
+                                if (!isSelect.value) {
+                                    isSelect.value = true
+                                    currentSelectImage.value = R.drawable.red_select
+                                } else {
+                                    isSelect.value = false
+                                    currentSelectImage.value = R.drawable.black_unselect
+                                }
+                            }
+                            .size(12.dp)
+                    )
+                }
+                Text(
+                    text = "我已阅读并同意《用户协议》《隐私政策》，用户首次登录将会同步注册APP账号",
+                    fontSize = 12.sp
+                )
+            }
+            if (showDialog.value) {
+                if (!isSelect.value) {
+                    AlertDialog(
+                        onDismissRequest = { showDialog.value = false },
+                        title = { Text("提示") },
+                        text = { Text("请勾选同意用户协议") },
+                        confirmButton = {
+                            Button(
+                                onClick = { showDialog.value = false },
+                                colors = ButtonDefaults.buttonColors(backgroundColor = Color.Black)
+                            ) {
+                                Text(text = "确定", color = Color.White)
                             }
                         }
-                        .size(12.dp)
-                )
-            }
-            Text(
-                text = "我已阅读并同意《用户协议》《隐私政策》，用户首次登录将会同步注册APP账号",
-                fontSize = 12.sp
-            )
-        }
-        if (showDialog.value) {
-            if (!isSelect.value) {
-                AlertDialog(
-                    onDismissRequest = { showDialog.value = false },
-                    title = { Text("提示") },
-                    text = { Text("请勾选同意用户协议") },
-                    confirmButton = {
-                        Button(
-                            onClick = { showDialog.value = false },
-                            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Black)
-                        ) {
-                            Text(text = "确定", color = Color.White)
+                    )
+                } else if (!isMobileFilled.value) {
+                    AlertDialog(
+                        onDismissRequest = { showDialog.value = false },
+                        title = { Text("提示") },
+                        text = { Text("请输入手机号") },
+                        confirmButton = {
+                            Button(onClick = { showDialog.value = false }) {
+                                Text("确定")
+                            }
                         }
-                    }
-                )
-            } else if (!isMobileFilled.value) {
-                AlertDialog(
-                    onDismissRequest = { showDialog.value = false },
-                    title = { Text("提示") },
-                    text = { Text("请输入手机号") },
-                    confirmButton = {
-                        Button(onClick = { showDialog.value = false }) {
-                            Text("确定")
-                        }
-                    }
-                )
+                    )
+                }
             }
         }
     }

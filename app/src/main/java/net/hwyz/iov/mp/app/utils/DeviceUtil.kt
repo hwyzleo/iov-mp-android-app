@@ -3,6 +3,9 @@ package net.hwyz.iov.mp.app.utils
 import net.hwyz.iov.mp.app.data.store.DataStoreUtils
 import java.util.UUID
 
+/**
+ * 设备工具类
+ */
 object DeviceUtil {
 
     fun getDeviceId(): String {

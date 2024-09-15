@@ -1,12 +1,12 @@
 package net.hwyz.iov.mp.app.ui.page.my.profile
 
 import net.hwyz.iov.mp.app.base.MviActionProcessor
-import net.hwyz.iov.mp.app.data.http.HttpService
+import net.hwyz.iov.mp.app.data.http.TspApi
 import net.hwyz.iov.mp.app.utils.AppUserUtil
 import javax.inject.Inject
 
 open class ProfileProcessor @Inject constructor(
-    private var service: HttpService,
+    private var service: TspApi,
 ) :
     MviActionProcessor<ProfileAction, ProfileResult> {
 

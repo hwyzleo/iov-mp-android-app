@@ -4,8 +4,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import net.hwyz.iov.mp.app.data.http.ApiCall
-import net.hwyz.iov.mp.app.data.http.HttpService
+import net.hwyz.iov.mp.app.data.http.TspApi
+import net.hwyz.iov.mp.app.data.http.TspNetworkManager
 import okhttp3.OkHttpClient
 import javax.inject.Singleton
 
@@ -15,9 +15,9 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideApiService(): HttpService = ApiCall.retrofit
+    fun provideApiService(): TspApi = TspNetworkManager.retrofit
 
     @Singleton
     @Provides
-    fun provideOkHttp(): OkHttpClient = ApiCall.okHttp
+    fun provideOkHttp(): OkHttpClient = TspNetworkManager.okHttp
 }

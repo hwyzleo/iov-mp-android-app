@@ -1,41 +1,21 @@
 package net.hwyz.iov.mp.app.ui.page.my
 
-import androidx.compose.foundation.gestures.PressGestureScope
-import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Icon
 import androidx.compose.material.ScaffoldState
-import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-import coil.compose.AsyncImage
-import net.hwyz.iov.mp.app.ui.page.RouteName
 import net.hwyz.iov.mp.app.utils.AppUserUtil
-import net.hwyz.iov.mp.app.utils.RouteUtils
 
+/**
+ * 我的页面
+ */
 @Composable
 fun MyView(
     navCtrl: NavHostController,
@@ -47,92 +27,25 @@ fun MyView(
     LaunchedEffect(Unit) {
         viewModel.intent(MyIntent.OnLaunched)
     }
-    MyScreen(
-        navCtrl = navCtrl,
-        intent = { intent: MyIntent -> viewModel.intent(intent) },
-        viewState = viewStates
-    )
-}
-
-@Composable
-fun MyScreen(
-    navCtrl: NavHostController,
-    intent: (MyIntent) -> Unit,
-    viewState: MyState
-) {
-    var isLogin = remember { mutableStateOf(viewState.isLogged) }
+    val isLogin = remember { mutableStateOf(viewStates.isLogged) }
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxSize()
     ) {
         if (!isLogin.value) {
-            MyViewNotLogin(navCtrl = navCtrl, intent = intent, viewState = viewState)
+            MyViewNotLogin(
+                navCtrl = navCtrl,
+                intent = { intent: MyIntent -> viewModel.intent(intent) },
+                viewState = viewStates
+            )
         } else {
-            MyAvatar(
+            MyViewLogin(
+                navCtrl = navCtrl,
+                intent = { intent: MyIntent -> viewModel.intent(intent) },
+                viewState = viewStates,
                 nickname = AppUserUtil.nickname,
                 avatar = AppUserUtil.avatar
-            ) {
-                AppUserUtil.onLogOut()
-                RouteUtils.navTo(
-                    navCtrl = navCtrl,
-                    destinationName = RouteName.PROFILE
-                )
-            }
-        }
-
-    }
-}
-
-@Composable
-fun MyAvatar(
-    nickname: String,
-    avatar: String?,
-    onClick: PressGestureScope.(Offset) -> Unit
-) {
-    Box(
-        modifier = Modifier
-            .pointerInput(Unit) {
-                detectTapGestures(
-                    onPress = onClick
-                )
-            }
-    ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            if (avatar == null) {
-                Icon(
-                    imageVector = Icons.Default.AccountCircle,
-                    contentDescription = "",
-                    modifier = Modifier
-                        .padding(top = 80.dp)
-                        .size(100.dp)
-                )
-            } else {
-                AsyncImage(
-                    model = avatar,
-                    contentDescription = "",
-                    modifier = Modifier
-                        .padding(top = 80.dp)
-                        .size(100.dp)
-                        .clip(CircleShape)
-                        .drawBehind {
-                            drawCircle(
-                                color = Color.Gray,
-                                center = center,
-                                radius = size.minDimension / 2
-                            )
-                        }
-                )
-            }
-            Text(text = nickname, fontSize = 18.sp, modifier = Modifier.padding(5.dp))
-            Spacer(modifier = Modifier.padding(bottom = 10.dp))
+            )
         }
     }
-}
-
-@Preview
-@Composable
-fun MyPagePreview() {
-    val navCtrl = rememberNavController()
-    var viewState = MyState()
-    MyScreen(navCtrl, {}, viewState)
 }

@@ -2,6 +2,7 @@ package net.hwyz.iov.mp.app.data.bean
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
+import retrofit2.http.Field
 
 /**
  * TSP平台通用响应实体
@@ -11,6 +12,23 @@ data class TspResponse<T>(
     var message: String,
     var ts: Long,
     var data: T?
+)
+
+/**
+ * 登录验证码请求
+ */
+data class LoginVerifyCodeRequest(
+    val countryRegionCode: String,
+    val mobile: String
+)
+
+/**
+ * 验证码登录请求
+ */
+data class VerifyCodeLoginRequest(
+    val countryRegionCode: String,
+    val mobile: String,
+    val verifyCode: String
 )
 
 /**
