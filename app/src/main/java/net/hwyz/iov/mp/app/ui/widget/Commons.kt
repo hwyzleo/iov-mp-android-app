@@ -110,7 +110,7 @@ fun HomeSearchBar(
                 .clickable { onSearchClick() }
         ) {
             Icon(
-                painter = painterResource(id = R.drawable.ic_search),
+                painter = painterResource(id = R.drawable.icon_search),
                 contentDescription = "搜索",
                 tint = AppTheme.colors.themeUi,
                 modifier = Modifier

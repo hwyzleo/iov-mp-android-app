@@ -2,19 +2,18 @@ package net.hwyz.iov.mp.app.ui.page.common
 
 import android.util.Log
 import androidx.annotation.StringRes
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -42,10 +41,10 @@ fun BottomNavBar(navCtrl: NavHostController) {
             BottomNavigationItem(
                 modifier = Modifier.background(AppTheme.colors.themeUi),
                 icon = {
-                    Icon(
-                        imageVector = screen.icon,
+                    Image(
+                        painter = painterResource(screen.id),
                         contentDescription = null,
-                        tint = AppTheme.colors.textPrimary
+                        modifier = Modifier.size(28.dp)
                     )
                 },
                 label = {
@@ -78,11 +77,11 @@ fun BottomNavBar(navCtrl: NavHostController) {
 sealed class BottomNavRoute(
     var routeName: String,
     @StringRes var stringId: Int,
-    var icon: ImageVector
+    var id: Int
 ) {
-    object Explore : BottomNavRoute(RouteName.EXPLORE, R.string.community, Icons.Default.Lock)
-    object Service : BottomNavRoute(RouteName.SERVICE, R.string.service, Icons.Default.Lock)
-    object Vehicle : BottomNavRoute(RouteName.VEHICLE, R.string.vehicle, Icons.Default.Lock)
-    object Mall : BottomNavRoute(RouteName.MALL, R.string.mall, Icons.Default.Lock)
-    object My : BottomNavRoute(RouteName.MY, R.string.my, Icons.Default.Person)
+    object Explore : BottomNavRoute(RouteName.EXPLORE, R.string.community, R.drawable.icon_lock)
+    object Service : BottomNavRoute(RouteName.SERVICE, R.string.service, R.drawable.icon_lock)
+    object Vehicle : BottomNavRoute(RouteName.VEHICLE, R.string.vehicle, R.drawable.icon_vehicle)
+    object Mall : BottomNavRoute(RouteName.MALL, R.string.mall, R.drawable.icon_lock)
+    object My : BottomNavRoute(RouteName.MY, R.string.my, R.drawable.icon_person)
 }

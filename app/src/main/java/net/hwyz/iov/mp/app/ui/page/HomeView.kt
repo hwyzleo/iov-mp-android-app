@@ -27,6 +27,7 @@ import net.hwyz.iov.mp.app.ui.page.login.LoginView
 import net.hwyz.iov.mp.app.ui.page.my.MyView
 import net.hwyz.iov.mp.app.ui.page.my.profile.ProfileView
 import net.hwyz.iov.mp.app.ui.page.my.setting.MySettingView
+import net.hwyz.iov.mp.app.ui.page.vehicle.VehicleView
 import net.hwyz.iov.mp.app.ui.theme.AppTheme
 import net.hwyz.iov.mp.app.ui.widget.bar.AppSnackBar
 import net.hwyz.iov.mp.app.ui.widget.view.EmptyView
@@ -92,11 +93,7 @@ fun HomeEntry() {
                         }
                         // 爱车
                         composable(route = RouteName.VEHICLE) {
-                            EmptyView(
-                                tips = "待解锁",
-                                imageVector = Icons.Default.Lock
-                            ) {
-                            }
+                            VehicleView(navCtrl, scaffoldState)
                         }
                         // 商城
                         composable(route = RouteName.MALL) {

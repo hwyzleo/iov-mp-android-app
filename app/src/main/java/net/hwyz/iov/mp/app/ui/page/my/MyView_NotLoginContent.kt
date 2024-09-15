@@ -51,14 +51,14 @@ fun MyViewNotLogin(
             Row {
                 Spacer(modifier = Modifier.weight(1f))
                 Image(
-                    painter = painterResource(id = R.drawable.ic_message),
+                    painter = painterResource(id = R.drawable.icon_bell),
                     contentDescription = "消息",
                     modifier = Modifier
                         .size(30.dp)
                 )
                 Spacer(modifier = Modifier.padding(end = 20.dp))
                 ImageButton(
-                    painter = painterResource(id = R.drawable.ic_setting),
+                    painter = painterResource(id = R.drawable.icon_setting),
                     contentDescription = "设置",
                     modifier = Modifier
                         .size(30.dp),
@@ -112,7 +112,7 @@ fun MyViewNotLogin(
 
 @Preview
 @Composable
-fun MyPageNotLoginPreview() {
+fun MyViewNotLoginPreview() {
     val navCtrl = rememberNavController()
     var viewState = MyState()
     MyViewNotLogin(navCtrl, {}, viewState)

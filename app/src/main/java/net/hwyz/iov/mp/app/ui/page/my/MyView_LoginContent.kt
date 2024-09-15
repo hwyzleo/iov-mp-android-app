@@ -60,14 +60,14 @@ fun MyViewLogin(
             Row {
                 Spacer(modifier = Modifier.weight(1f))
                 Image(
-                    painter = painterResource(id = R.drawable.ic_message),
+                    painter = painterResource(id = R.drawable.icon_bell),
                     contentDescription = "消息",
                     modifier = Modifier
                         .size(30.dp)
                 )
                 Spacer(modifier = Modifier.padding(end = 20.dp))
                 ImageButton(
-                    painter = painterResource(id = R.drawable.ic_setting),
+                    painter = painterResource(id = R.drawable.icon_setting),
                     contentDescription = "设置",
                     modifier = Modifier
                         .size(30.dp),
@@ -145,7 +145,7 @@ fun MyViewLogin(
 
 @Preview
 @Composable
-fun MyPageLoginPreview() {
+fun MyViewLoginPreview() {
     MyViewLogin(
         navCtrl = rememberNavController(),
         intent = {},

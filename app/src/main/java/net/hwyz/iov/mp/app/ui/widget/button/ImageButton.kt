@@ -40,7 +40,7 @@ fun ImageButton(
 @Composable
 fun ImageButtonPreview() {
     ImageButton(
-        painter = painterResource(id = R.drawable.ic_setting),
+        painter = painterResource(id = R.drawable.icon_setting),
         contentDescription = "设置",
         modifier = Modifier
             .size(30.dp),

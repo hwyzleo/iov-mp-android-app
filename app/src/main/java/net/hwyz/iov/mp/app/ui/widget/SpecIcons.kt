@@ -32,7 +32,7 @@ fun HotIcon(
     modifier: Modifier = Modifier,
 ) {
     Icon(
-        painter = painterResource(id = R.drawable.ic_hot),
+        painter = painterResource(id = R.drawable.icon_hot),
         contentDescription = null,
         tint = AppTheme.colors.hot,
         modifier = modifier
@@ -48,7 +48,7 @@ fun ShareIcon(
     modifier: Modifier = Modifier,
 ) {
     Icon(
-        painter = painterResource(id = R.drawable.ic_share),
+        painter = painterResource(id = R.drawable.icon_share),
         contentDescription = null,
         modifier = modifier
             .width(25.dp)
@@ -83,7 +83,7 @@ fun TimerIcon(
     isLoading: Boolean = false
 ) {
     Icon(
-        painter = painterResource(id = R.drawable.ic_time),
+        painter = painterResource(id = R.drawable.icon_time),
         contentDescription = "",
         tint = AppTheme.colors.textSecondary,
         modifier = modifier
@@ -103,7 +103,7 @@ fun UserIcon(
     isLoading: Boolean = false
 ) {
     Icon(
-        painter = painterResource(id = R.drawable.ic_author),
+        painter = painterResource(id = R.drawable.icon_person),
         contentDescription = "",
         modifier = modifier
             .width(15.dp)

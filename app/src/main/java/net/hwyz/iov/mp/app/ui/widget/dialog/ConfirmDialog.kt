@@ -4,8 +4,9 @@ import androidx.compose.material.AlertDialog
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import net.hwyz.iov.mp.app.ui.theme.AppTheme
+import net.hwyz.iov.mp.app.ui.widget.textfield.OtpTextField
 
 /**
  * 确认对话框
@@ -36,4 +37,14 @@ fun ConfirmDialog(
             }
         )
     }
+}
+
+@Preview
+@Composable
+fun ConfirmDialogPreview() {
+    ConfirmDialog(
+        showDialog = true,
+        onDismiss = {},
+        onConfirm = {}
+    )
 }
