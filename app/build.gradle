@@ -8,6 +8,7 @@ plugins {
     id "jacoco"
     // junit5 doesn't support android projects out of the box
     id "de.mannodermaus.android-junit5"
+    id 'org.jetbrains.kotlin.android'
 }
 
 android {

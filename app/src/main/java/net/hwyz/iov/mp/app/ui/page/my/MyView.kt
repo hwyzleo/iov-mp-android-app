@@ -14,9 +14,6 @@ import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.List
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
@@ -36,7 +33,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import net.hwyz.iov.mp.app.ui.page.RouteName
-import net.hwyz.iov.mp.app.ui.widget.list.TitleList
 import net.hwyz.iov.mp.app.utils.AppUserUtil
 import net.hwyz.iov.mp.app.utils.RouteUtils
 
@@ -76,6 +72,7 @@ fun MyScreen(
                 nickname = AppUserUtil.nickname,
                 avatar = AppUserUtil.avatar
             ) {
+                AppUserUtil.onLogOut()
                 RouteUtils.navTo(
                     navCtrl = navCtrl,
                     destinationName = RouteName.PROFILE

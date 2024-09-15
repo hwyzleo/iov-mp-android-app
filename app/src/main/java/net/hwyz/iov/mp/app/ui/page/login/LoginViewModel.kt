@@ -24,7 +24,7 @@ class LoginViewModel @Inject constructor(
                 LoginAction.DisplayLoading,
                 LoginAction.SendVerifyCode(
                     intent.countryRegionCode,
-                    intent.mobile
+                    intent.mobile.replace(" ", "")
                 )
             )
 
