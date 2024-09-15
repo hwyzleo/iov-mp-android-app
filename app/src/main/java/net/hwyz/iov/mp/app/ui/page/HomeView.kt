@@ -73,7 +73,7 @@ fun HomeEntry() {
                             .background(MaterialTheme.colors.background)
                             .padding(padding),
                         navController = navCtrl,
-                        startDestination = RouteName.MY
+                        startDestination = RouteName.EXPLORE
                     ) {
                         // 探索
                         composable(route = RouteName.EXPLORE) {

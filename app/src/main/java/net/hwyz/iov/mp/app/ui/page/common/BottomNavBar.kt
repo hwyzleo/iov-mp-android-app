@@ -1,6 +1,5 @@
 package net.hwyz.iov.mp.app.ui.page.common
 
-import android.util.Log
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -41,11 +40,19 @@ fun BottomNavBar(navCtrl: NavHostController) {
             BottomNavigationItem(
                 modifier = Modifier.background(AppTheme.colors.themeUi),
                 icon = {
-                    Image(
-                        painter = painterResource(screen.id),
-                        contentDescription = null,
-                        modifier = Modifier.size(28.dp)
-                    )
+                    if(currentDestination?.hierarchy?.any { it.route == screen.routeName } == true) {
+                        Image(
+                            painter = painterResource(screen.id2),
+                            contentDescription = null,
+                            modifier = Modifier.size(28.dp)
+                        )
+                    } else {
+                        Image(
+                            painter = painterResource(screen.id),
+                            contentDescription = null,
+                            modifier = Modifier.size(28.dp)
+                        )
+                    }
                 },
                 label = {
                     Text(
@@ -55,11 +62,6 @@ fun BottomNavBar(navCtrl: NavHostController) {
                 },
                 selected = currentDestination?.hierarchy?.any { it.route == screen.routeName } == true,
                 onClick = {
-                    Log.d(
-                        "test",
-                        "BottomNavView当前路由 ===> ${currentDestination?.hierarchy?.toList()}"
-                    )
-                    Log.d("test", "当前路由栈 ===> ${navCtrl.graph.nodes}")
                     if (currentDestination?.route != screen.routeName) {
                         navCtrl.navigate(screen.routeName) {
                             popUpTo(navCtrl.graph.findStartDestination().id) {
@@ -77,11 +79,12 @@ fun BottomNavBar(navCtrl: NavHostController) {
 sealed class BottomNavRoute(
     var routeName: String,
     @StringRes var stringId: Int,
-    var id: Int
+    var id: Int,
+    var id2: Int
 ) {
-    object Explore : BottomNavRoute(RouteName.EXPLORE, R.string.community, R.drawable.icon_lock)
-    object Service : BottomNavRoute(RouteName.SERVICE, R.string.service, R.drawable.icon_lock)
-    object Vehicle : BottomNavRoute(RouteName.VEHICLE, R.string.vehicle, R.drawable.icon_vehicle)
-    object Mall : BottomNavRoute(RouteName.MALL, R.string.mall, R.drawable.icon_lock)
-    object My : BottomNavRoute(RouteName.MY, R.string.my, R.drawable.icon_person)
+    object Explore : BottomNavRoute(RouteName.EXPLORE, R.string.community, R.drawable.icon_explore, R.drawable.icon_explore_fill)
+    object Service : BottomNavRoute(RouteName.SERVICE, R.string.service, R.drawable.icon_service, R.drawable.icon_service_fill)
+    object Vehicle : BottomNavRoute(RouteName.VEHICLE, R.string.vehicle, R.drawable.icon_vehicle, R.drawable.icon_vehicle_fill)
+    object Mall : BottomNavRoute(RouteName.MALL, R.string.mall, R.drawable.icon_mall, R.drawable.icon_mall_fill)
+    object My : BottomNavRoute(RouteName.MY, R.string.my, R.drawable.icon_person, R.drawable.icon_person_fill)
 }
