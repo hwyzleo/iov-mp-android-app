@@ -2,7 +2,8 @@ package net.hwyz.iov.mp.app.data.bean
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
-import retrofit2.http.Field
+import kotlinx.android.parcel.RawValue
+import java.util.Objects
 
 /**
  * TSP平台通用响应实体
@@ -54,4 +55,28 @@ data class AccountInfo(
     var nickname: String,
     var avatar: String?,
     var gender: String
+) : Parcelable
+
+/**
+ * 车控请求
+ */
+@Parcelize
+data class ControlRequest(
+    val vin: String,
+    val params: @RawValue Map<String, Any>
+) : Parcelable
+
+/**
+ * 车控状态
+ */
+@Parcelize
+data class ControlState(
+    // 车架号
+    val vin: String,
+    // 指令ID
+    val cmdId: String,
+    // 指令状态
+    val cmdState: String,
+    // 远控指令错误信息
+    val failureMsg: String?
 ) : Parcelable
