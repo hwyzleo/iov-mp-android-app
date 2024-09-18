@@ -6,7 +6,9 @@ sealed class VehicleResult : MviResult {
     object DefaultResult : VehicleResult()
 
     object FindVehicle : VehicleResult() {
-        data class Success(val vin: String, val cmdId: String) : VehicleResult()
+        data class Success(val vin: String, val cmdId: String, val cmdState: String) :
+            VehicleResult()
+
         data class Failure(val error: Throwable) : VehicleResult()
     }
 

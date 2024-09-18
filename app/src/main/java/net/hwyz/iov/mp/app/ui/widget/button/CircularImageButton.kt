@@ -52,12 +52,14 @@ fun CircularImageButton(
     onClick: () -> Unit
 ) {
     val remainingSeconds = remember(countdownSeconds) { mutableStateOf(countdownSeconds) }
-    val shouldStartCountdown = remember { mutableStateOf(true) }
-    val showCountdown = remainingSeconds.value > 0 && shouldStartCountdown.value
+    val shouldStartCountdown = remember(countdownSeconds) { mutableStateOf(countdownSeconds > 0) }
+    val showCountdown = remainingSeconds.value >= 0 && shouldStartCountdown.value
     val animatedProgress by animateFloatAsState(
         targetValue = if (showCountdown) 1f - (remainingSeconds.value.toFloat() / countdownSeconds) else 0f,
         animationSpec = tween(durationMillis = 1000)
     )
+    val borderWidth = remember { mutableStateOf(1.dp) }
+    val bgColor = remember { mutableStateOf(Color.White) }
     LaunchedEffect(key1 = remainingSeconds, key2 = showCountdown) {
         if (shouldStartCountdown.value) {
             remainingSeconds.value = countdownSeconds
@@ -75,8 +77,8 @@ fun CircularImageButton(
         modifier = modifier
             .size(buttonSize)
             .clip(CircleShape)
-            .background(Color.White)
-            .border(width = 1.dp, color = Color.Black, shape = CircleShape)
+            .background(bgColor.value)
+            .border(width = borderWidth.value, color = Color.Black, shape = CircleShape)
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = rememberRipple(bounded = false, radius = 28.dp),
@@ -85,25 +87,28 @@ fun CircularImageButton(
     ) {
         if (showCountdown) {
             // 倒计时进度环
+            borderWidth.value = 0.dp
+            bgColor.value = Color.LightGray
             Canvas(modifier = Modifier.fillMaxSize()) {
                 drawArc(
-                    color = Color.Green,
+                    color = Color(0xFF65C466),
                     startAngle = -90f,
                     sweepAngle = 360f * animatedProgress,
                     useCenter = false,
-                    style = Stroke(width = 4.dp.toPx())
+                    style = Stroke(width = 8.dp.toPx())
                 )
             }
-
-            // 倒计时文本
-            Text(
-                text = remainingSeconds.value.toString(),
-                modifier = Modifier.align(Alignment.Center),
-                color = Color.Black,
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Bold
+            Image(
+                painter = painterResource(id = imageRes),
+                contentDescription = contentDescription,
+                modifier = Modifier
+                    .size(imageSize)
+                    .align(Alignment.Center),
+                contentScale = ContentScale.Crop
             )
         } else {
+            borderWidth.value = 1.dp
+            bgColor.value = Color.White
             if (isLoading) {
                 CircularProgressIndicator(
                     modifier = Modifier

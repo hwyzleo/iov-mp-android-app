@@ -20,7 +20,11 @@ open class VehicleProcessor @Inject constructor(private var tspApi: TspApi) :
         return try {
             val response = tspApi.findVehicle(ControlRequest(vin, emptyMap()))
             if (response.code == 0) {
-                VehicleResult.FindVehicle.Success(response.data!!.vin, response.data!!.cmdId)
+                VehicleResult.FindVehicle.Success(
+                    response.data!!.vin,
+                    response.data!!.cmdId,
+                    response.data!!.cmdState
+                )
             } else {
                 throw Exception(response.message)
             }
