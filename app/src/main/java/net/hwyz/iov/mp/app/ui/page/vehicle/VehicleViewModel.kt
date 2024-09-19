@@ -1,5 +1,6 @@
 package net.hwyz.iov.mp.app.ui.page.vehicle
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -12,6 +13,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import net.hwyz.iov.mp.app.base.presentation.BaseViewModel
+import net.hwyz.iov.mp.app.utils.CommonUtil
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
 import javax.inject.Inject
@@ -30,24 +32,48 @@ class VehicleViewModel @Inject constructor(override val actionProcessor: Vehicle
             is VehicleIntent.OnLaunched -> listOf(VehicleAction.CheckLocalUser)
             is VehicleIntent.FindVehicle -> {
                 viewStates = viewStates.copy(findVehicleLoading = true)
+                startFindVehicleCmdStateCheckTask(intent.vin)
                 listOf(VehicleAction.FindVehicle(intent.vin))
             }
         }
     }
 
-    private fun startFindVehicleCmdStateCheckTask(vin: String, cmdId: String) {
+    private fun startFindVehicleCmdStateCheckTask(vin: String) {
         startFindVehicleCmdStateCheckJob?.cancel()
         startFindVehicleCmdStateCheckJob = viewModelScope.launch {
-
-            while (isActive && viewStates.findVehicleCmdId != null && ChronoUnit.SECONDS.between(
-                    viewStates.findVehicleTime,
-                    LocalDateTime.now()
-                ) <= viewStates.findVehicleTimeout
-            ) {
+            while (isActive && !isFindVehicleTimeout()) {
                 delay(1000)
-                reducer(actionProcessor.executeAction(VehicleAction.GetCmdState(vin, cmdId)))
+                if (viewStates.findVehicleCmdId != null) {
+                    reducer(
+                        actionProcessor.executeAction(
+                            VehicleAction.GetCmdState(
+                                vin,
+                                viewStates.findVehicleCmdId!!
+                            )
+                        )
+                    )
+                }
             }
         }
+    }
+
+    private fun isFindVehicleTimeout(): Boolean {
+        if (viewStates.findVehicleTime != null && ChronoUnit.SECONDS.between(
+                viewStates.findVehicleTime,
+                LocalDateTime.now()
+            ) > viewStates.findVehicleTimeout
+        ) {
+            startFindVehicleCmdStateCheckJob?.cancel()
+            viewStates = viewStates.copy(
+                findVehicleLoading = false,
+                findVehicleExecuteTime = 0,
+                findVehicleCmdId = null,
+                findVehicleTime = null,
+                findVehicleState = null
+            )
+            return true
+        }
+        return false
     }
 
     override suspend fun reducer(result: VehicleResult) {
@@ -59,7 +85,7 @@ class VehicleViewModel @Inject constructor(override val actionProcessor: Vehicle
                 result.cmdState
             )
 
-            is VehicleResult.FindVehicle.Failure -> {}
+            is VehicleResult.FindVehicle.Failure -> findVehicleFailure(result.error)
             is VehicleResult.GetCmdState.Success -> getCmdStateSuccess(
                 result.cmdId,
                 result.cmdState,
@@ -77,7 +103,17 @@ class VehicleViewModel @Inject constructor(override val actionProcessor: Vehicle
             findVehicleState = cmdState,
             cmdMapping = mapOf(cmdId to "FIND_VEHICLE")
         )
-        startFindVehicleCmdStateCheckTask(vin, cmdId)
+    }
+
+    private suspend fun findVehicleFailure(error: Throwable) {
+        viewStates = viewStates.copy(
+            findVehicleLoading = false,
+            findVehicleCmdId = null,
+            findVehicleTime = null,
+            findVehicleState = null
+        )
+        startFindVehicleCmdStateCheckJob?.cancel()
+        _viewEvents.send(VehicleViewEvent.InfoMessage(CommonUtil.convertErrorMsg(error.message)))
     }
 
     private suspend fun getCmdStateSuccess(cmdId: String, cmdState: String, failureMsg: String?) {
