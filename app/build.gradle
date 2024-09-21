@@ -11,12 +11,15 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+def localProperties = new Properties()
+localProperties.load(new FileInputStream(rootProject.file("local.properties")))
+
 android {
     compileSdkVersion 34
 
     defaultConfig {
-        testInstrumentationRunnerArguments runnerBuilder: 'de.mannodermaus.junit5.AndroidJUnit5Builder'
         applicationId "net.hwyz.iov.mp.app"
+        testInstrumentationRunnerArguments runnerBuilder: 'de.mannodermaus.junit5.AndroidJUnit5Builder'
         minSdkVersion 26
         targetSdkVersion 34
         versionCode 1
@@ -26,6 +29,14 @@ android {
 
         buildConfigField("String", "ApiKey", "\"cd4ff600\"")
         buildConfigField("String", "BASE_URL", "\"https://www.omdbapi.com/\"")
+        ndk {
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64', 'mips', 'mips64'
+        }
+        manifestPlaceholders = [
+                JPUSH_PKGNAME: applicationId,
+                JPUSH_APPKEY : localProperties['jpushAppKey'],
+                JPUSH_CHANNEL: "developer-default",
+        ]
     }
 
     buildTypes {
@@ -93,7 +104,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'androidx.lifecycle:lifecycle-reactivestreams-ktx:2.4.1'
     implementation "androidx.navigation:navigation-compose:2.5.3"
-
+    // compose
     implementation "androidx.compose.runtime:runtime:$compose_compiler_version"
     implementation "androidx.compose.runtime:runtime-livedata:$compose_compiler_version"
     implementation "androidx.compose.runtime:runtime-rxjava3:$compose_compiler_version"
@@ -102,9 +113,9 @@ dependencies {
     implementation "androidx.compose.ui:ui:$compose_compiler_version"
     implementation "androidx.compose.ui:ui-tooling:$compose_compiler_version"
     implementation "androidx.compose.material:material:$compose_compiler_version"
+    implementation "androidx.compose.foundation:foundation-layout:$compose_compiler_version"
     implementation "io.coil-kt:coil-compose:2.4.0"
 
-    implementation "androidx.compose.foundation:foundation-layout:$compose_compiler_version"
 
     implementation "androidx.constraintlayout:constraintlayout-compose:1.0.0"
 
@@ -198,4 +209,8 @@ dependencies {
     implementation "androidx.paging:paging-runtime:$pagingVersion"
     testImplementation "androidx.paging:paging-common:$pagingVersion"
     implementation "androidx.paging:paging-compose:$pagingComposeVersion"
+    // 极光推送
+    implementation "cn.jiguang.sdk:jpush:$jpushVersion"
+    // 事件总线
+    implementation "org.greenrobot:eventbus:$eventbusVersion"
 }

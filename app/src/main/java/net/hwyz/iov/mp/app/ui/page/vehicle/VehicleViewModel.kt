@@ -1,10 +1,10 @@
 package net.hwyz.iov.mp.app.ui.page.vehicle
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
+import cn.jpush.android.api.NotificationMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
@@ -13,19 +13,48 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import net.hwyz.iov.mp.app.base.presentation.BaseViewModel
+import net.hwyz.iov.mp.app.push.PushEvent
 import net.hwyz.iov.mp.app.utils.CommonUtil
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
+import org.json.JSONObject
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
 import javax.inject.Inject
 
+
 @HiltViewModel
 class VehicleViewModel @Inject constructor(override val actionProcessor: VehicleProcessor) :
     BaseViewModel<VehicleIntent, VehicleState, VehicleAction, VehicleResult>() {
+    init {
+        EventBus.getDefault().register(this)
+    }
+
     var viewStates by mutableStateOf(VehicleState())
     private val _viewEvents = Channel<VehicleViewEvent>(Channel.BUFFERED)
     val viewEvents = _viewEvents.receiveAsFlow()
 
     private var startFindVehicleCmdStateCheckJob: Job? = null
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onPushEvent(event: PushEvent) {
+        when (event) {
+            is PushEvent.NotificationArrived -> handleNotificationArrived(event.message)
+        }
+    }
+
+    private fun handleNotificationArrived(message: NotificationMessage) {
+        message.inAppExtras?.let {
+            val jsonObject = JSONObject(it)
+            val cmdId = jsonObject.getString("cmdId")
+            val cmdState = jsonObject.getString("cmdState")
+            val failureMsg: String? = jsonObject.optString("failureMsg")
+            viewModelScope.launch {
+                getCmdStateSuccess(cmdId, cmdState, failureMsg)
+            }
+        }
+    }
 
     override fun actionFromIntent(intent: VehicleIntent): List<VehicleAction> {
         return when (intent) {
@@ -42,7 +71,7 @@ class VehicleViewModel @Inject constructor(override val actionProcessor: Vehicle
         startFindVehicleCmdStateCheckJob?.cancel()
         startFindVehicleCmdStateCheckJob = viewModelScope.launch {
             while (isActive && !isFindVehicleTimeout()) {
-                delay(1000)
+                delay(5000)
                 if (viewStates.findVehicleCmdId != null) {
                     reducer(
                         actionProcessor.executeAction(
@@ -154,6 +183,11 @@ class VehicleViewModel @Inject constructor(override val actionProcessor: Vehicle
             )
             startFindVehicleCmdStateCheckJob?.cancel()
         }
+    }
+
+    override fun onCleared() {
+        EventBus.getDefault().unregister(this)
+        super.onCleared()
     }
 }
 

@@ -6,6 +6,7 @@ import net.hwyz.iov.mp.app.data.bean.ControlState
 import net.hwyz.iov.mp.app.data.bean.LoginResponse
 import net.hwyz.iov.mp.app.data.bean.LoginVerifyCodeRequest
 import net.hwyz.iov.mp.app.data.bean.TspResponse
+import net.hwyz.iov.mp.app.data.bean.UpdateClientConfigRequest
 import net.hwyz.iov.mp.app.data.bean.VerifyCodeLoginRequest
 import retrofit2.http.*
 
@@ -52,5 +53,9 @@ interface TspApi {
         @Query("vin") vin: String,
         @Query("cmdId") cmdId: String
     ): TspResponse<ControlState>
+
+    // 更新客户端配置
+    @POST("/mp/client/action/updateConfig")
+    suspend fun updateClientConfig(@Body request: UpdateClientConfigRequest): TspResponse<Void>
 
 }

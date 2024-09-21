@@ -80,3 +80,14 @@ data class ControlState(
     // 远控指令错误信息
     val failureMsg: String?
 ) : Parcelable
+
+/**
+ * 更新客户端配置请求
+ */
+@Parcelize
+data class UpdateClientConfigRequest(
+    // 推送注册ID
+    val pushRegId: String,
+    // 操作系统
+    val os: String = "ANDROID"
+) : Parcelable

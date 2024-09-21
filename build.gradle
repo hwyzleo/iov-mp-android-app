@@ -5,6 +5,8 @@ buildscript {
         compose_compiler_version = "1.4.3"
         dagger_hilt_version = "2.46.1"
         datastoreVersion = "1.0.0-rc02"
+        eventbusVersion = "3.3.1"
+        jpushVersion = "5.4.0"
         kotlin_version = "1.8.10"
         pagingVersion = "3.1.0-rc01"
         pagingComposeVersion = "1.0.0-alpha14"
