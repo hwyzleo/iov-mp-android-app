@@ -17,7 +17,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import net.hwyz.iov.mp.app.data.bean.UpdateClientConfigRequest
 import net.hwyz.iov.mp.app.data.http.TspApi
-import net.hwyz.iov.mp.app.ui.page.HomeEntry
 import net.hwyz.iov.mp.app.utils.DeviceUtil
 import javax.inject.Inject
 

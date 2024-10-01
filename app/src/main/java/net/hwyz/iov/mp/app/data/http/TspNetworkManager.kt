@@ -22,6 +22,7 @@ object TspNetworkManager {
     private const val DEFAULT_TIMEOUT = 30000
     private lateinit var SERVICE: TspApi
     private const val TSP_URL = "http://192.168.2.223:8081"
+//    private const val TSP_URL = "http://10.0.68.109:8081"
 
 
     //手动创建一个OkHttpClient并设置超时时间
