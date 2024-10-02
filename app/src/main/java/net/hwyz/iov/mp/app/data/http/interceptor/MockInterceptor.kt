@@ -4,6 +4,9 @@ import com.google.gson.Gson
 import net.hwyz.iov.mp.app.data.bean.AccountInfo
 import net.hwyz.iov.mp.app.data.bean.LoginResponse
 import net.hwyz.iov.mp.app.data.bean.TspResponse
+import net.hwyz.iov.mp.app.data.bean.mockLoginResponse
+import net.hwyz.iov.mp.app.data.bean.mockTspResponse
+import net.hwyz.iov.mp.app.utils.GlobalStateManager
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.Protocol
@@ -21,16 +24,25 @@ class MockInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
         val url = request.url.toString()
-        if (url.contains("mock")) {
-            var responseBody: ResponseBody? = null
-            if (url.endsWith("/account/mp/login/sendVerifyCode")) {
-                responseBody = mockSendVerifyCode()
-            }
-            if (url.endsWith("/account/mp/login/verifyCodeLogin")) {
-                responseBody = mockVerifyCodeLogin()
-            }
-            if (url.endsWith("/account/mp/account/info")) {
-                responseBody = mockAccountInfo()
+        if (GlobalStateManager.isMock) {
+            val gson = Gson()
+            val path = url.replace(GlobalStateManager.apiUrl, "")
+            var responseBody: ResponseBody =
+                "{}".toResponseBody("application/json".toMediaTypeOrNull())
+            when (path) {
+                "/mp/login/action/sendSmsVerifyCode" -> {
+                    responseBody = gson.toJson(mockTspResponse())
+                        .toResponseBody("application/json".toMediaTypeOrNull())
+                }
+
+                "/mp/login/action/smsVerifyCodeLogin" -> {
+                    responseBody = gson.toJson(mockLoginResponse())
+                        .toResponseBody("application/json".toMediaTypeOrNull())
+                }
+
+                "/account/mp/account/info" -> {
+                    responseBody = mockAccountInfo()
+                }
             }
             return Response.Builder()
                 .request(request)
@@ -42,38 +54,6 @@ class MockInterceptor : Interceptor {
         } else {
             return chain.proceed(request)
         }
-    }
-
-    private fun mockSendVerifyCode(): ResponseBody {
-        val gson = Gson()
-        return gson.toJson(
-            TspResponse(
-                code = 0,
-                message = "",
-                ts = System.currentTimeMillis(),
-                data = null
-            )
-        ).toResponseBody("application/json".toMediaTypeOrNull())
-    }
-
-    private fun mockVerifyCodeLogin(): ResponseBody {
-        val gson = Gson()
-        return gson.toJson(
-            TspResponse(
-                code = 0,
-                message = "",
-                ts = System.currentTimeMillis(),
-                data = LoginResponse(
-                    mobile = "13917288107",
-                    nickname = "hwyz_leo",
-                    avatar = "https://pic.imgdb.cn/item/66e667a0d9c307b7e93075e8.png",
-                    token = "token",
-                    tokenExpires = System.currentTimeMillis() + 1000000000,
-                    refreshToken = "refreshToken",
-                    refreshTokenExpires = System.currentTimeMillis() + 1000000000
-                )
-            )
-        ).toResponseBody("application/json".toMediaTypeOrNull())
     }
 
     private fun mockAccountInfo(): ResponseBody {

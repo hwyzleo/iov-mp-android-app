@@ -2,10 +2,12 @@ package net.hwyz.iov.mp.app.module.login
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -17,14 +19,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.SoftwareKeyboardController
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import net.hwyz.iov.mp.app.R
 import net.hwyz.iov.mp.app.theme.AppTheme
-import net.hwyz.iov.mp.app.widget.bar.TopBackTitleBar
-import net.hwyz.iov.mp.app.widget.textfield.OtpTextField
+import net.hwyz.iov.mp.app.component.bar.TopBackTitleBar
+import net.hwyz.iov.mp.app.component.textfield.OtpTextField
 import net.hwyz.iov.mp.app.utils.RouteUtils.back
 
 @ExperimentalComposeUiApi
@@ -36,51 +40,64 @@ fun LoginStep2View(
     mobile: String = ""
 ) {
     var verifyCode = remember { mutableStateOf("") }
-    Column(
+    Box(
         modifier = Modifier
-            .fillMaxSize()
             .background(AppTheme.colors.themeUi)
-            .pointerInput(Unit) {
-                detectTapGestures(
-                    onPress = {
-                        keyboardController?.hide()
+            .padding(20.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(AppTheme.colors.themeUi)
+                .pointerInput(Unit) {
+                    detectTapGestures(
+                        onPress = {
+                            keyboardController?.hide()
+                        }
+                    )
+                },
+        ) {
+            TopBackTitleBar(onBack = { navCtrl.back() })
+            Spacer(modifier = Modifier.height(20.dp))
+            Text(
+                text = stringResource(id = R.string.input_verify_code),
+                fontSize = 20.sp
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+            Row {
+                Text(
+                    text = stringResource(id = R.string.verify_code_has_sent),
+                    color = AppTheme.colors.fontSecondary
+                )
+                Text(
+                    text = mobile,
+                    color = AppTheme.colors.fontSecondary
+                )
+            }
+            Spacer(modifier = Modifier.height(30.dp))
+            Row {
+                Spacer(modifier = Modifier.weight(1f))
+                OtpTextField(
+                    otpText = verifyCode.value,
+                    onOtpTextChange = {
+                        verifyCode.value = it
+                        if (it.length == 6) {
+                            keyboardController?.hide()
+                            intent(LoginIntent.VerifyCodeLogin(verifyCode = verifyCode.value))
+                        }
                     }
                 )
-            },
-    ) {
-        TopBackTitleBar(onBack = { navCtrl.back() })
-        Text(
-            text = "请输入验证码",
-            fontSize = 20.sp,
-            modifier = Modifier.padding(start = 20.dp, top = 10.dp, bottom = 10.dp)
-        )
-        Text(
-            text = "验证码已发送到您的手机：${mobile}",
-            color = Color.Gray,
-            modifier = Modifier.padding(start = 20.dp, top = 10.dp, bottom = 30.dp)
-        )
-        Row(modifier = Modifier.padding(start = 20.dp, end = 20.dp)) {
-            Spacer(modifier = Modifier.weight(1f))
-            OtpTextField(
-                otpText = verifyCode.value,
-                onOtpTextChange = {
-                    verifyCode.value = it
-                    if (it.length == 6) {
-                        keyboardController?.hide()
-                        intent(LoginIntent.VerifyCodeLogin(verifyCode = verifyCode.value))
-                    }
-                }
-            )
-            Spacer(modifier = Modifier.weight(1f))
-        }
-        Row(modifier = Modifier.padding(top = 40.dp)) {
-            Spacer(modifier = Modifier.weight(1f))
-            Text(
-                text = "重新获取验证码",
-                color = Color.Gray,
-                modifier = Modifier.padding(start = 20.dp, top = 10.dp, bottom = 30.dp)
-            )
-            Spacer(modifier = Modifier.weight(1f))
+                Spacer(modifier = Modifier.weight(1f))
+            }
+            Spacer(modifier = Modifier.height(40.dp))
+            Row {
+                Spacer(modifier = Modifier.weight(1f))
+                Text(
+                    text = stringResource(id = R.string.reget_verigy_code),
+                    color = AppTheme.colors.fontSecondary
+                )
+                Spacer(modifier = Modifier.weight(1f))
+            }
         }
     }
 }

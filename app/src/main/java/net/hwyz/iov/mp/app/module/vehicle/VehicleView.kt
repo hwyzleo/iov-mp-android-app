@@ -31,12 +31,12 @@ import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import net.hwyz.iov.mp.app.R
 import net.hwyz.iov.mp.app.theme.AppTheme
-import net.hwyz.iov.mp.app.widget.bar.CustomProgressBar
-import net.hwyz.iov.mp.app.widget.bar.SNACK_ERROR
-import net.hwyz.iov.mp.app.widget.bar.SNACK_INFO
-import net.hwyz.iov.mp.app.widget.bar.popupSnackBar
-import net.hwyz.iov.mp.app.widget.button.CircularImageButton
-import net.hwyz.iov.mp.app.widget.button.ImageButton
+import net.hwyz.iov.mp.app.component.bar.CustomProgressBar
+import net.hwyz.iov.mp.app.component.bar.SNACK_ERROR
+import net.hwyz.iov.mp.app.component.bar.SNACK_INFO
+import net.hwyz.iov.mp.app.component.bar.popupSnackBar
+import net.hwyz.iov.mp.app.component.button.CircularImageButton
+import net.hwyz.iov.mp.app.component.button.ImageButton
 
 /**
  * 爱车页面

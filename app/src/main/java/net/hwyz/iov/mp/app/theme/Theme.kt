@@ -1,7 +1,5 @@
 package net.hwyz.iov.mp.app.theme
 
-import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.TweenSpec
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Stable
@@ -34,16 +32,16 @@ object AppTheme {
 class AppColors(
     themeUi: Color, // 主题风格颜色
     background: Color, // 背景颜色
-    primaryText: Color, // 主要文本颜色
-    secondaryText: Color, // 次要文本颜色
+    fontPrimary: Color, // 主要文本颜色
+    fontSecondary: Color, // 次要文本颜色
 ) {
     var themeUi: Color by mutableStateOf(themeUi)
         internal set
     var background: Color by mutableStateOf(background)
         private set
-    var primaryText: Color by mutableStateOf(primaryText)
+    var fontPrimary: Color by mutableStateOf(fontPrimary)
         private set
-    var secondaryText: Color by mutableStateOf(secondaryText)
+    var fontSecondary: Color by mutableStateOf(fontSecondary)
         private set
 }
 
@@ -53,8 +51,8 @@ class AppColors(
 private val LightAppColors = AppColors(
     themeUi = Color(0xFFFFFFFF),
     background = Color(0xFFFFFFFF),
-    primaryText = Color(0xFF1A171B),
-    secondaryText = Color(0xFF8E8E8E),
+    fontPrimary = Color(0xFF1A171B),
+    fontSecondary = Color(0xFF8E8E8E),
 )
 
 /**
@@ -63,8 +61,8 @@ private val LightAppColors = AppColors(
 private val DarkAppColors = AppColors(
     themeUi = black1,
     background = black2,
-    primaryText = black3,
-    secondaryText = black4,
+    fontPrimary = black3,
+    fontSecondary = black4,
 )
 
 var LocalAppColors = compositionLocalOf {

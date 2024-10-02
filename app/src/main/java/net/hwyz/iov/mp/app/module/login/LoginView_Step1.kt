@@ -30,6 +30,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -38,9 +39,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import net.hwyz.iov.mp.app.R
 import net.hwyz.iov.mp.app.theme.AppTheme
-import net.hwyz.iov.mp.app.widget.bar.TopBackTitleBar
-import net.hwyz.iov.mp.app.widget.button.RoundedCornerButton
-import net.hwyz.iov.mp.app.widget.textfield.MobileTextField
+import net.hwyz.iov.mp.app.component.bar.TopBackTitleBar
+import net.hwyz.iov.mp.app.component.button.RoundedCornerButton
+import net.hwyz.iov.mp.app.component.textfield.MobileTextField
 import net.hwyz.iov.mp.app.utils.RouteUtils.back
 
 @ExperimentalComposeUiApi
@@ -50,12 +51,12 @@ fun LoginStep1View(
     keyboardController: SoftwareKeyboardController?,
     intent: (LoginIntent) -> Unit
 ) {
-    var mobile = remember { mutableStateOf(TextFieldValue()) }
-    var isMobileFilled = remember { mutableStateOf(false) }
-    var btnBgColor = remember { mutableStateOf(Color.Gray) }
-    var isSelect = remember { mutableStateOf(false) }
-    var currentSelectImage = remember { mutableStateOf(R.drawable.black_unselect) }
-    var showDialog = remember { mutableStateOf(false) }
+    val mobile = remember { mutableStateOf(TextFieldValue()) }
+    val isMobileFilled = remember { mutableStateOf(false) }
+    val btnBgColor = remember { mutableStateOf(Color.Gray) }
+    val isSelect = remember { mutableStateOf(false) }
+    val currentSelectImage = remember { mutableStateOf(R.drawable.black_unselect) }
+    val showDialog = remember { mutableStateOf(false) }
     Box(
         modifier = Modifier
             .background(AppTheme.colors.themeUi)
@@ -75,7 +76,8 @@ fun LoginStep1View(
         ) {
             TopBackTitleBar(onBack = { navCtrl.back() })
             Text(
-                text = "请输入手机号", fontSize = 20.sp,
+                text = stringResource(id = R.string.input_mobile),
+                fontSize = 20.sp,
                 modifier = Modifier.padding(top = 10.dp, bottom = 30.dp)
             )
             Row(
@@ -92,7 +94,7 @@ fun LoginStep1View(
                     modifier = Modifier
                         .fillMaxHeight()
                         .width(0.5.dp)
-                        .background(Color.Black)
+                        .background(AppTheme.colors.fontPrimary)
                 )
                 MobileTextField(
                     value = mobile.value,
@@ -109,7 +111,7 @@ fun LoginStep1View(
             }
             Spacer(modifier = Modifier.padding(bottom = 30.dp))
             RoundedCornerButton(
-                text = "获取验证码",
+                text = stringResource(id = R.string.get_verify_code),
                 bgColor = btnBgColor.value,
                 textColor = Color.White
             ) {
@@ -135,17 +137,17 @@ fun LoginStep1View(
                             .clickable {
                                 if (!isSelect.value) {
                                     isSelect.value = true
-                                    currentSelectImage.value = R.drawable.red_select
+                                    currentSelectImage.value = R.drawable.icon_circle_check
                                 } else {
                                     isSelect.value = false
-                                    currentSelectImage.value = R.drawable.black_unselect
+                                    currentSelectImage.value = R.drawable.icon_circle
                                 }
                             }
                             .size(12.dp)
                     )
                 }
                 Text(
-                    text = "我已阅读并同意《用户协议》《隐私政策》，用户首次登录将会同步注册APP账号",
+                    text = stringResource(id = R.string.login_confirm_tip),
                     fontSize = 12.sp
                 )
             }
@@ -153,25 +155,25 @@ fun LoginStep1View(
                 if (!isSelect.value) {
                     AlertDialog(
                         onDismissRequest = { showDialog.value = false },
-                        title = { Text("提示") },
-                        text = { Text("请勾选同意用户协议") },
+                        title = { Text(stringResource(id = R.string.tip)) },
+                        text = { Text(stringResource(id = R.string.agree_user_agreement)) },
                         confirmButton = {
                             Button(
                                 onClick = { showDialog.value = false },
                                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.Black)
                             ) {
-                                Text(text = "确定", color = Color.White)
+                                Text(text = stringResource(id = R.string.confirm), color = Color.White)
                             }
                         }
                     )
                 } else if (!isMobileFilled.value) {
                     AlertDialog(
                         onDismissRequest = { showDialog.value = false },
-                        title = { Text("提示") },
-                        text = { Text("请输入手机号") },
+                        title = { Text(stringResource(id = R.string.tip)) },
+                        text = { Text(stringResource(id = R.string.input_mobile)) },
                         confirmButton = {
                             Button(onClick = { showDialog.value = false }) {
-                                Text("确定")
+                                Text(stringResource(id = R.string.confirm))
                             }
                         }
                     )

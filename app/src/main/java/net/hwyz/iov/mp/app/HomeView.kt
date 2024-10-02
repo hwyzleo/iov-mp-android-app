@@ -21,15 +21,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import net.hwyz.iov.mp.app.widget.bar.BottomNavBar
+import net.hwyz.iov.mp.app.component.bar.BottomNavBar
 import net.hwyz.iov.mp.app.module.login.LoginView
 import net.hwyz.iov.mp.app.module.my.view.MyView
 import net.hwyz.iov.mp.app.module.my.profile.ProfileView
 import net.hwyz.iov.mp.app.module.my.view.MySettingView
 import net.hwyz.iov.mp.app.module.vehicle.VehicleView
 import net.hwyz.iov.mp.app.theme.AppTheme
-import net.hwyz.iov.mp.app.widget.bar.AppSnackBar
-import net.hwyz.iov.mp.app.widget.view.EmptyView
+import net.hwyz.iov.mp.app.component.bar.AppSnackBar
+import net.hwyz.iov.mp.app.component.view.EmptyView
 import net.hwyz.iov.mp.app.utils.AppUserUtil
 
 /**

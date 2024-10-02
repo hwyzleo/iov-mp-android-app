@@ -49,11 +49,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import kotlinx.coroutines.launch
-import net.hwyz.iov.mp.app.widget.view.LoadingView
+import net.hwyz.iov.mp.app.component.view.LoadingView
 import net.hwyz.iov.mp.app.theme.AppTheme
-import net.hwyz.iov.mp.app.widget.bar.TopBackTitleBar
-import net.hwyz.iov.mp.app.widget.item.TextFieldItem
-import net.hwyz.iov.mp.app.widget.list.ContentList
+import net.hwyz.iov.mp.app.component.bar.TopBackTitleBar
+import net.hwyz.iov.mp.app.component.item.TextFieldItem
+import net.hwyz.iov.mp.app.component.list.ContentList
 import net.hwyz.iov.mp.app.utils.CommonUtil
 import net.hwyz.iov.mp.app.utils.RouteUtils.back
 

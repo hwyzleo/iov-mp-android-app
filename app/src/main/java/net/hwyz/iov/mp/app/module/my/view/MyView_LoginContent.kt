@@ -24,6 +24,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -36,9 +37,9 @@ import net.hwyz.iov.mp.app.RouteName
 import net.hwyz.iov.mp.app.module.my.intent.MyIntent
 import net.hwyz.iov.mp.app.module.my.state.MyState
 import net.hwyz.iov.mp.app.theme.AppTheme
-import net.hwyz.iov.mp.app.widget.button.ImageButton
-import net.hwyz.iov.mp.app.widget.button.RoundedCornerButton
-import net.hwyz.iov.mp.app.widget.list.TitleList
+import net.hwyz.iov.mp.app.component.button.ImageButton
+import net.hwyz.iov.mp.app.component.button.RoundedCornerButton
+import net.hwyz.iov.mp.app.component.list.TitleList
 import net.hwyz.iov.mp.app.utils.AppUserUtil
 import net.hwyz.iov.mp.app.utils.RouteUtils
 
@@ -63,14 +64,14 @@ fun MyViewLogin(
                 Spacer(modifier = Modifier.weight(1f))
                 Image(
                     painter = painterResource(id = R.drawable.icon_bell),
-                    contentDescription = "消息",
+                    contentDescription = "",
                     modifier = Modifier
                         .size(30.dp)
                 )
                 Spacer(modifier = Modifier.padding(end = 20.dp))
                 ImageButton(
                     painter = painterResource(id = R.drawable.icon_setting),
-                    contentDescription = "设置",
+                    contentDescription = "",
                     modifier = Modifier
                         .size(30.dp),
                 ) {
@@ -94,7 +95,7 @@ fun MyViewLogin(
                     if (avatar != null) {
                         AsyncImage(
                             model = avatar,
-                            contentDescription = "用户头像",
+                            contentDescription = "",
                             modifier = Modifier
                                 .size(80.dp)
                                 .clip(CircleShape)
@@ -109,7 +110,7 @@ fun MyViewLogin(
                     } else {
                         Image(
                             painter = painterResource(id = R.drawable.my_place_holder),
-                            contentDescription = "默认头像",
+                            contentDescription = "",
                             modifier = Modifier
                                 .size(80.dp)
                         )
@@ -119,7 +120,7 @@ fun MyViewLogin(
             Spacer(modifier = Modifier.height(10.dp))
             Row {
                 RoundedCornerButton(
-                    text = "签到",
+                    text = stringResource(id = R.string.sign_in),
                     modifier = Modifier
                         .width(80.dp)
                         .height(30.dp)
@@ -133,14 +134,14 @@ fun MyViewLogin(
                 Spacer(modifier = Modifier.weight(1f))
             }
             Spacer(modifier = Modifier.height(20.dp))
-            Column {
-                TitleList(iconRes = Icons.Default.List, title = "我的积分") {}
-                TitleList(iconRes = Icons.Default.ShoppingCart, title = "我的订单") {}
-            }
-            Spacer(modifier = Modifier.padding(bottom = 20.dp))
-            Column {
-                TitleList(iconRes = Icons.Default.Settings, title = "设置") {}
-            }
+//            Column {
+//                TitleList(iconRes = Icons.Default.List, title = "我的积分") {}
+//                TitleList(iconRes = Icons.Default.ShoppingCart, title = "我的订单") {}
+//            }
+//            Spacer(modifier = Modifier.padding(bottom = 20.dp))
+//            Column {
+//                TitleList(iconRes = Icons.Default.Settings, title = "设置") {}
+//            }
         }
     }
 }

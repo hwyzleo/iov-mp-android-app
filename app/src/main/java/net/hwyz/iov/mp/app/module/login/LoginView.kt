@@ -8,9 +8,9 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import net.hwyz.iov.mp.app.widget.bar.SNACK_ERROR
-import net.hwyz.iov.mp.app.widget.bar.popupSnackBar
-import net.hwyz.iov.mp.app.widget.view.LoadingView
+import net.hwyz.iov.mp.app.component.bar.SNACK_ERROR
+import net.hwyz.iov.mp.app.component.bar.popupSnackBar
+import net.hwyz.iov.mp.app.component.view.LoadingView
 
 @ExperimentalComposeUiApi
 @Composable
