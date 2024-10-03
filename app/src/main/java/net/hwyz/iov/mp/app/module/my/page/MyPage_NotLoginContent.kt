@@ -1,4 +1,4 @@
-package net.hwyz.iov.mp.app.module.my.view
+package net.hwyz.iov.mp.app.module.my.page
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -32,7 +32,7 @@ import net.hwyz.iov.mp.app.theme.AppTheme
 import net.hwyz.iov.mp.app.utils.RouteUtils
 
 @Composable
-fun MyViewNotLogin(
+fun MyPageNotLogin(
     navCtrl: NavHostController,
     intent: (MyIntent) -> Unit,
     viewState: MyState
@@ -99,8 +99,8 @@ fun MyViewNotLogin(
 
 @Preview
 @Composable
-fun MyViewNotLoginPreview() {
+fun MyPageNotLoginPreview() {
     val navCtrl = rememberNavController()
     var viewState = MyState()
-    MyViewNotLogin(navCtrl, {}, viewState)
+    MyPageNotLogin(navCtrl, {}, viewState)
 }

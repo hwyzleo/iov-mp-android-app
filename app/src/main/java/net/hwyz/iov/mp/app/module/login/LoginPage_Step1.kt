@@ -46,7 +46,7 @@ import net.hwyz.iov.mp.app.utils.RouteUtils.back
 
 @ExperimentalComposeUiApi
 @Composable
-fun LoginStep1View(
+fun LoginStep1Page(
     navCtrl: NavHostController,
     keyboardController: SoftwareKeyboardController?,
     intent: (LoginIntent) -> Unit
@@ -88,7 +88,7 @@ fun LoginStep1View(
                     text = "+86",
                     fontSize = 20.sp,
                     modifier = Modifier
-                        .width(65.dp)
+                        .width(45.dp)
                 )
                 Box(
                     modifier = Modifier
@@ -186,8 +186,8 @@ fun LoginStep1View(
 @OptIn(ExperimentalComposeUiApi::class)
 @Preview
 @Composable
-fun LoginStep1ViewPreview() {
+fun LoginStep1PagePreview() {
     val navCtrl = rememberNavController()
     val keyboardController = LocalSoftwareKeyboardController.current
-    LoginStep1View(navCtrl = navCtrl, keyboardController = keyboardController, intent = {})
+    LoginStep1Page(navCtrl = navCtrl, keyboardController = keyboardController, intent = {})
 }

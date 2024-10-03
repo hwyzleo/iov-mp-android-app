@@ -21,15 +21,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import net.hwyz.iov.mp.app.component.bar.BottomNavBar
-import net.hwyz.iov.mp.app.module.login.LoginView
-import net.hwyz.iov.mp.app.module.my.view.MyView
-import net.hwyz.iov.mp.app.module.my.profile.ProfileView
-import net.hwyz.iov.mp.app.module.my.view.MySettingView
-import net.hwyz.iov.mp.app.module.vehicle.VehicleView
-import net.hwyz.iov.mp.app.theme.AppTheme
 import net.hwyz.iov.mp.app.component.bar.AppSnackBar
+import net.hwyz.iov.mp.app.component.bar.BottomNavBar
 import net.hwyz.iov.mp.app.component.view.EmptyView
+import net.hwyz.iov.mp.app.module.login.LoginPage
+import net.hwyz.iov.mp.app.module.my.page.MyPage
+import net.hwyz.iov.mp.app.module.my.page.MySettingPage
+import net.hwyz.iov.mp.app.module.my.profile.ProfileView
+import net.hwyz.iov.mp.app.module.vehicle.VehiclePage
+import net.hwyz.iov.mp.app.theme.AppTheme
 import net.hwyz.iov.mp.app.utils.AppUserUtil
 
 /**
@@ -92,7 +92,7 @@ fun HomeEntry() {
                         }
                         // 爱车
                         composable(route = RouteName.VEHICLE) {
-                            VehicleView(navCtrl, scaffoldState)
+                            VehiclePage(navCtrl, scaffoldState)
                         }
                         // 商城
                         composable(route = RouteName.MALL) {
@@ -104,11 +104,11 @@ fun HomeEntry() {
                         }
                         // 我的
                         composable(route = RouteName.MY) {
-                            MyView(navCtrl, scaffoldState)
+                            MyPage(navCtrl, scaffoldState)
                         }
                         // 我的 - 设置
                         composable(route = RouteName.MY_SETTING) {
-                            MySettingView(navCtrl, scaffoldState, AppUserUtil.isLogged)
+                            MySettingPage(navCtrl, scaffoldState, AppUserUtil.isLogged)
                         }
                         // 用户资料
                         composable(route = RouteName.PROFILE) {
@@ -116,7 +116,7 @@ fun HomeEntry() {
                         }
                         // 登录
                         composable(route = RouteName.LOGIN) {
-                            LoginView(navCtrl, scaffoldState)
+                            LoginPage(navCtrl, scaffoldState)
                         }
 
                     }

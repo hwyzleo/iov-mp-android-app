@@ -1,4 +1,4 @@
-package net.hwyz.iov.mp.app.module.my.view
+package net.hwyz.iov.mp.app.module.my.page
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,7 +19,7 @@ import net.hwyz.iov.mp.app.utils.AppUserUtil
  * 我的页面
  */
 @Composable
-fun MyView(
+fun MyPage(
     navCtrl: NavHostController,
     scaffoldState: ScaffoldState,
     viewModel: MyViewModel = hiltViewModel()
@@ -35,13 +35,13 @@ fun MyView(
         modifier = Modifier.fillMaxSize()
     ) {
         if (!isLogin.value) {
-            MyViewNotLogin(
+            MyPageNotLogin(
                 navCtrl = navCtrl,
                 intent = { intent: MyIntent -> viewModel.intent(intent) },
                 viewState = viewStates
             )
         } else {
-            MyViewLogin(
+            MyPageLogin(
                 navCtrl = navCtrl,
                 intent = { intent: MyIntent -> viewModel.intent(intent) },
                 viewState = viewStates,

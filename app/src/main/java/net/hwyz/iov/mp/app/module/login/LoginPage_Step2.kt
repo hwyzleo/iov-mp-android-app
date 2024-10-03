@@ -15,7 +15,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.SoftwareKeyboardController
@@ -33,7 +32,7 @@ import net.hwyz.iov.mp.app.utils.RouteUtils.back
 
 @ExperimentalComposeUiApi
 @Composable
-fun LoginStep2View(
+fun LoginStep2Page(
     navCtrl: NavHostController,
     keyboardController: SoftwareKeyboardController?,
     intent: (LoginIntent) -> Unit,
@@ -105,8 +104,8 @@ fun LoginStep2View(
 @OptIn(ExperimentalComposeUiApi::class)
 @Preview
 @Composable
-fun LoginStep2ViewPreview() {
+fun LoginStep2PagePreview() {
     val navCtrl = rememberNavController()
     val keyboardController = LocalSoftwareKeyboardController.current
-    LoginStep2View(navCtrl = navCtrl, keyboardController = keyboardController, intent = {})
+    LoginStep2Page(navCtrl = navCtrl, keyboardController = keyboardController, intent = {})
 }

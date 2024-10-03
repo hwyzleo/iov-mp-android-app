@@ -14,7 +14,7 @@ import net.hwyz.iov.mp.app.component.view.LoadingView
 
 @ExperimentalComposeUiApi
 @Composable
-fun LoginView(
+fun LoginPage(
     navCtrl: NavHostController,
     scaffoldState: ScaffoldState,
     viewModel: LoginViewModel = hiltViewModel()
@@ -36,7 +36,7 @@ fun LoginView(
 
     when (viewStates.result) {
         LoginResult.DisplayStep1 -> {
-            LoginStep1View(
+            LoginStep1Page(
                 navCtrl = navCtrl,
                 keyboardController = keyboardController,
                 intent = {
@@ -47,7 +47,7 @@ fun LoginView(
 
         LoginResult.DisplayLoading -> LoadingView()
         LoginResult.SendVerifyCode -> {
-            LoginStep2View(
+            LoginStep2Page(
                 navCtrl = navCtrl,
                 keyboardController = keyboardController,
                 intent = {

@@ -1,4 +1,4 @@
-package net.hwyz.iov.mp.app.module.my.view
+package net.hwyz.iov.mp.app.module.my.page
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -13,10 +13,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.List
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,12 +35,11 @@ import net.hwyz.iov.mp.app.module.my.state.MyState
 import net.hwyz.iov.mp.app.theme.AppTheme
 import net.hwyz.iov.mp.app.component.button.ImageButton
 import net.hwyz.iov.mp.app.component.button.RoundedCornerButton
-import net.hwyz.iov.mp.app.component.list.TitleList
 import net.hwyz.iov.mp.app.utils.AppUserUtil
 import net.hwyz.iov.mp.app.utils.RouteUtils
 
 @Composable
-fun MyViewLogin(
+fun MyPageLogin(
     navCtrl: NavHostController,
     intent: (MyIntent) -> Unit,
     viewState: MyState,
@@ -148,8 +143,8 @@ fun MyViewLogin(
 
 @Preview
 @Composable
-fun MyViewLoginPreview() {
-    MyViewLogin(
+fun MyPageLoginPreview() {
+    MyPageLogin(
         navCtrl = rememberNavController(),
         intent = {},
         viewState = MyState(),

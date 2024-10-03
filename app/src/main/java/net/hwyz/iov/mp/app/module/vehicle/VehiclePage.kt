@@ -42,7 +42,7 @@ import net.hwyz.iov.mp.app.component.button.ImageButton
  * 爱车页面
  */
 @Composable
-fun VehicleView(
+fun VehiclePage(
     navCtrl: NavHostController,
     scaffoldState: ScaffoldState,
     viewModel: VehicleViewModel = hiltViewModel()

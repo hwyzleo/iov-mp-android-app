@@ -1,4 +1,4 @@
-package net.hwyz.iov.mp.app.module.my.view
+package net.hwyz.iov.mp.app.module.my.page
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -40,7 +40,7 @@ import net.hwyz.iov.mp.app.utils.GlobalStateManager
  * 我的 - 设置页面
  */
 @Composable
-fun MySettingView(
+fun MySettingPage(
     navCtrl: NavHostController,
     scaffoldState: ScaffoldState,
     isLogged: Boolean
@@ -126,5 +126,5 @@ fun MySettingView(
 @Preview
 @Composable
 fun MySettingViewPreview() {
-    MySettingView(rememberNavController(), rememberScaffoldState(), true)
+    MySettingPage(rememberNavController(), rememberScaffoldState(), true)
 }
