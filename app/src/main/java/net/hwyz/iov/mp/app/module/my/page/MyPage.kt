@@ -13,7 +13,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import net.hwyz.iov.mp.app.module.my.intent.MyIntent
 import net.hwyz.iov.mp.app.module.my.viewmodel.MyViewModel
-import net.hwyz.iov.mp.app.utils.AppUserUtil
+import net.hwyz.iov.mp.app.utils.UserManager
 
 /**
  * 我的页面
@@ -25,7 +25,7 @@ fun MyPage(
     viewModel: MyViewModel = hiltViewModel()
 ) {
     val viewStates = viewModel.viewStates
-    viewStates.isLogged = AppUserUtil.isLogged
+    viewStates.isLogged = UserManager.isLogged
     LaunchedEffect(Unit) {
         viewModel.intent(MyIntent.OnLaunched)
     }
@@ -45,8 +45,8 @@ fun MyPage(
                 navCtrl = navCtrl,
                 intent = { intent: MyIntent -> viewModel.intent(intent) },
                 viewState = viewStates,
-                nickname = AppUserUtil.nickname,
-                avatar = AppUserUtil.avatar
+                nickname = UserManager.nickname,
+                avatar = UserManager.avatar
             )
         }
     }

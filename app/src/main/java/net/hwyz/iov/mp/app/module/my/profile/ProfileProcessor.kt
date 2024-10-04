@@ -2,7 +2,7 @@ package net.hwyz.iov.mp.app.module.my.profile
 
 import net.hwyz.iov.mp.app.base.MviActionProcessor
 import net.hwyz.iov.mp.app.data.http.TspApi
-import net.hwyz.iov.mp.app.utils.AppUserUtil
+import net.hwyz.iov.mp.app.utils.UserManager
 import javax.inject.Inject
 
 open class ProfileProcessor @Inject constructor(
@@ -39,7 +39,7 @@ open class ProfileProcessor @Inject constructor(
         return try {
             val response = service.modifyNickname(nickname = nickname)
             if (response.code == 0) {
-                AppUserUtil.changeNickname(nickname = nickname)
+                UserManager.changeNickname(nickname = nickname)
                 ProfileResult.UpdateNickname.Success(nickname)
             } else {
                 throw Exception(response.message)

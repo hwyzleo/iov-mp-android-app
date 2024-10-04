@@ -30,7 +30,7 @@ import net.hwyz.iov.mp.app.module.my.page.MySettingPage
 import net.hwyz.iov.mp.app.module.my.profile.ProfileView
 import net.hwyz.iov.mp.app.module.vehicle.VehiclePage
 import net.hwyz.iov.mp.app.theme.AppTheme
-import net.hwyz.iov.mp.app.utils.AppUserUtil
+import net.hwyz.iov.mp.app.utils.UserManager
 
 /**
  * 主页
@@ -108,7 +108,7 @@ fun HomeEntry() {
                         }
                         // 我的 - 设置
                         composable(route = RouteName.MY_SETTING) {
-                            MySettingPage(navCtrl, scaffoldState, AppUserUtil.isLogged)
+                            MySettingPage(navCtrl, scaffoldState, UserManager.isLogged)
                         }
                         // 用户资料
                         composable(route = RouteName.PROFILE) {

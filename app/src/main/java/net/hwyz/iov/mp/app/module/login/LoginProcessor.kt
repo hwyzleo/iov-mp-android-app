@@ -4,7 +4,7 @@ import net.hwyz.iov.mp.app.base.MviActionProcessor
 import net.hwyz.iov.mp.app.data.bean.LoginVerifyCodeRequest
 import net.hwyz.iov.mp.app.data.bean.VerifyCodeLoginRequest
 import net.hwyz.iov.mp.app.data.http.TspApi
-import net.hwyz.iov.mp.app.utils.AppUserUtil
+import net.hwyz.iov.mp.app.utils.UserManager
 import javax.inject.Inject
 
 open class LoginProcessor @Inject constructor(
@@ -64,7 +64,7 @@ open class LoginProcessor @Inject constructor(
                     )
                 )
             if (response.code == 0) {
-                AppUserUtil.onLogin(response.data!!)
+                UserManager.onLogin(response.data!!)
                 LoginResult.VerifyCodeLogin.Success
             } else {
                 throw Exception(response.message)

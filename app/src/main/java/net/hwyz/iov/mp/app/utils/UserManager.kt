@@ -4,11 +4,11 @@ import net.hwyz.iov.mp.app.data.bean.LoginResponse
 import net.hwyz.iov.mp.app.data.store.DataStoreUtils
 
 /**
- * APP用户工具类
+ * 用户管理类
  *
  * @author hwyz_leo
  */
-object AppUserUtil {
+object UserManager {
     private const val LOGGED_FLAG = "logged_flag"
     private const val NICKNAME = "nickname"
     private const val AVATAR = "avatar"

@@ -1,6 +1,6 @@
 package net.hwyz.iov.mp.app.data.http.interceptor
 
-import net.hwyz.iov.mp.app.utils.AppUserUtil
+import net.hwyz.iov.mp.app.utils.UserManager
 import net.hwyz.iov.mp.app.utils.DeviceUtil
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -17,7 +17,7 @@ class SetHeaderInterceptor : Interceptor {
         val builder = request.newBuilder()
         builder.addHeader("Content-Type", "application/json; charset=utf-8")
         builder.addHeader("clientId", DeviceUtil.getDeviceId())
-        builder.addHeader("token", AppUserUtil.token)
+        builder.addHeader("token", UserManager.token)
         return chain.proceed(builder.build())
     }
 

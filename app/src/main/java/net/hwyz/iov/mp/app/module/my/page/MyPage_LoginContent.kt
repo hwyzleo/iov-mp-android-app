@@ -35,7 +35,7 @@ import net.hwyz.iov.mp.app.module.my.state.MyState
 import net.hwyz.iov.mp.app.theme.AppTheme
 import net.hwyz.iov.mp.app.component.button.ImageButton
 import net.hwyz.iov.mp.app.component.button.RoundedCornerButton
-import net.hwyz.iov.mp.app.utils.AppUserUtil
+import net.hwyz.iov.mp.app.utils.UserManager
 import net.hwyz.iov.mp.app.utils.RouteUtils
 
 @Composable
@@ -120,7 +120,7 @@ fun MyPageLogin(
                         .width(80.dp)
                         .height(30.dp)
                 ) {
-                    AppUserUtil.onLogOut()
+                    UserManager.onLogOut()
                     RouteUtils.navTo(
                         navCtrl = navCtrl,
                         destinationName = RouteName.MY

@@ -20,6 +20,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
+/**
+ * 验证码输入框
+ *
+ * @author hwyz_leo
+ */
 @Composable
 fun OtpTextField(
     otpText: String,

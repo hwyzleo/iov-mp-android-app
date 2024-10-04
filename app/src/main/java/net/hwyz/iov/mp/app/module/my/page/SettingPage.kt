@@ -29,7 +29,7 @@ import net.hwyz.iov.mp.app.R
 import net.hwyz.iov.mp.app.RouteName
 import net.hwyz.iov.mp.app.theme.AppTheme
 import net.hwyz.iov.mp.app.theme.H5
-import net.hwyz.iov.mp.app.utils.AppUserUtil
+import net.hwyz.iov.mp.app.utils.UserManager
 import net.hwyz.iov.mp.app.utils.RouteUtils
 import net.hwyz.iov.mp.app.component.bar.TopBackTitleBar
 import net.hwyz.iov.mp.app.component.button.RoundedCornerButton
@@ -111,7 +111,7 @@ fun MySettingPage(
                     showDialog = showDialog.value,
                     onDismiss = { showDialog.value = false },
                     onConfirm = {
-                        AppUserUtil.onLogOut()
+                        UserManager.onLogOut()
                         RouteUtils.navTo(
                             navCtrl = navCtrl,
                             destinationName = RouteName.MY
