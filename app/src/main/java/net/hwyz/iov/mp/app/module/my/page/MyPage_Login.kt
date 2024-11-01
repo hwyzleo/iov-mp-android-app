@@ -38,6 +38,11 @@ import net.hwyz.iov.mp.app.component.button.RoundedCornerButton
 import net.hwyz.iov.mp.app.utils.UserManager
 import net.hwyz.iov.mp.app.utils.RouteUtils
 
+/**
+ * 我的页面-已登录
+ *
+ * @author hwyz_leo
+ */
 @Composable
 fun MyPageLogin(
     navCtrl: NavHostController,

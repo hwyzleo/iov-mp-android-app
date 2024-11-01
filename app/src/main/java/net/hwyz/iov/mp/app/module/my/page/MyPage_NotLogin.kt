@@ -31,6 +31,11 @@ import net.hwyz.iov.mp.app.module.my.state.MyState
 import net.hwyz.iov.mp.app.theme.AppTheme
 import net.hwyz.iov.mp.app.utils.RouteUtils
 
+/**
+ * 我的页面 - 未登录
+ *
+ * @author hwyz_leo
+ */
 @Composable
 fun MyPageNotLogin(
     navCtrl: NavHostController,
