@@ -2,9 +2,9 @@ package net.hwyz.iov.mp.app.data.http.interceptor
 
 import com.google.gson.Gson
 import net.hwyz.iov.mp.app.data.bean.AccountInfo
-import net.hwyz.iov.mp.app.data.bean.LoginResponse
 import net.hwyz.iov.mp.app.data.bean.TspResponse
 import net.hwyz.iov.mp.app.data.bean.mockLoginResponse
+import net.hwyz.iov.mp.app.data.bean.mockSaleModelList
 import net.hwyz.iov.mp.app.data.bean.mockTspResponse
 import net.hwyz.iov.mp.app.utils.GlobalStateManager
 import okhttp3.Interceptor
@@ -29,18 +29,23 @@ class MockInterceptor : Interceptor {
             val path = url.replace(GlobalStateManager.apiUrl, "")
             var responseBody: ResponseBody =
                 "{}".toResponseBody("application/json".toMediaTypeOrNull())
-            when (path) {
-                "/mp/login/action/sendSmsVerifyCode" -> {
+            when {
+                Regex("/mp/login/action/sendSmsVerifyCode").matches(path) -> {
                     responseBody = gson.toJson(mockTspResponse())
                         .toResponseBody("application/json".toMediaTypeOrNull())
                 }
 
-                "/mp/login/action/smsVerifyCodeLogin" -> {
-                    responseBody = gson.toJson(mockLoginResponse())
+                Regex("/mp/login/action/smsVerifyCodeLogin").matches(path) -> {
+                    responseBody = gson.toJson(mockTspResponse(mockLoginResponse()))
                         .toResponseBody("application/json".toMediaTypeOrNull())
                 }
 
-                "/account/mp/account/info" -> {
+                Regex("/mp/saleModel/.*").matches(path) -> {
+                    responseBody = gson.toJson(mockTspResponse(mockSaleModelList()))
+                        .toResponseBody("application/json".toMediaTypeOrNull())
+                }
+
+                Regex("/account/mp/account/info").matches(path) -> {
                     responseBody = mockAccountInfo()
                 }
             }

@@ -25,12 +25,15 @@ import net.hwyz.iov.mp.app.component.bar.AppSnackBar
 import net.hwyz.iov.mp.app.component.bar.BottomNavBar
 import net.hwyz.iov.mp.app.component.view.EmptyView
 import net.hwyz.iov.mp.app.module.login.LoginPage
+import net.hwyz.iov.mp.app.module.marketing.page.MarketingIndexPage
+import net.hwyz.iov.mp.app.module.marketing.page.VehicleModelConfigPage
 import net.hwyz.iov.mp.app.module.my.page.MyPage
 import net.hwyz.iov.mp.app.module.my.page.MySettingPage
 import net.hwyz.iov.mp.app.module.my.profile.ProfileView
 import net.hwyz.iov.mp.app.module.vehicle.VehiclePage
 import net.hwyz.iov.mp.app.theme.AppTheme
 import net.hwyz.iov.mp.app.utils.UserManager
+import net.hwyz.iov.mp.app.utils.VehicleManager
 
 /**
  * 主页
@@ -92,7 +95,11 @@ fun HomeEntry() {
                         }
                         // 爱车
                         composable(route = RouteName.VEHICLE) {
-                            VehiclePage(navCtrl, scaffoldState)
+                            if(VehicleManager.hasVehicle()) {
+                                VehiclePage(navCtrl, scaffoldState)
+                            } else {
+                                MarketingIndexPage(navCtrl, scaffoldState)
+                            }
                         }
                         // 商城
                         composable(route = RouteName.MALL) {
@@ -118,7 +125,10 @@ fun HomeEntry() {
                         composable(route = RouteName.LOGIN) {
                             LoginPage(navCtrl, scaffoldState)
                         }
-
+                        // 车型配置
+                        composable(route = RouteName.MODEL_CONFIG) {
+                            VehicleModelConfigPage(navCtrl, scaffoldState)
+                        }
                     }
                 },
                 snackbarHost = {
@@ -144,4 +154,5 @@ object RouteName {
     const val MY_SETTING = "my_setting"
     const val PROFILE = "profile"
     const val LOGIN = "login"
+    const val MODEL_CONFIG = "model_config"
 }

@@ -18,6 +18,7 @@
     <string name="sign_in">签到</string>
     <string name="tip">提示</string>
     <string name="vehicle">爱车</string>
+    <string name="buy_vehicle">购车</string>
     <string name="verify_code_has_sent">验证码已发送至您的手机：</string>
     <string name="version">版本</string>
 </resources>

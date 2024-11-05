@@ -55,7 +55,7 @@ fun LoginStep1Page(
     val isMobileFilled = remember { mutableStateOf(false) }
     val btnBgColor = remember { mutableStateOf(Color.Gray) }
     val isSelect = remember { mutableStateOf(false) }
-    val currentSelectImage = remember { mutableStateOf(R.drawable.black_unselect) }
+    val currentSelectImage = remember { mutableStateOf(R.drawable.icon_circle) }
     val showDialog = remember { mutableStateOf(false) }
     Box(
         modifier = Modifier

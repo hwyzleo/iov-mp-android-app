@@ -20,6 +20,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import net.hwyz.iov.mp.app.R
 import net.hwyz.iov.mp.app.RouteName
 import net.hwyz.iov.mp.app.theme.AppTheme
+import net.hwyz.iov.mp.app.utils.VehicleManager
 
 /**
  * 底部导航栏
@@ -40,7 +41,7 @@ fun BottomNavBar(navCtrl: NavHostController) {
             BottomNavigationItem(
                 modifier = Modifier.background(AppTheme.colors.themeUi),
                 icon = {
-                    if(currentDestination?.hierarchy?.any { it.route == screen.routeName } == true) {
+                    if (currentDestination?.hierarchy?.any { it.route == screen.routeName } == true) {
                         Image(
                             painter = painterResource(screen.id2),
                             contentDescription = null,
@@ -55,10 +56,24 @@ fun BottomNavBar(navCtrl: NavHostController) {
                     }
                 },
                 label = {
-                    Text(
-                        text = stringResource(screen.stringId),
-                        color = AppTheme.colors.fontPrimary
-                    )
+                    if (screen == BottomNavRoute.Vehicle) {
+                        if (VehicleManager.hasVehicle()) {
+                            Text(
+                                text = stringResource(R.string.vehicle),
+                                color = AppTheme.colors.fontPrimary
+                            )
+                        } else {
+                            Text(
+                                text = stringResource(R.string.buy_vehicle),
+                                color = AppTheme.colors.fontPrimary
+                            )
+                        }
+                    } else {
+                        Text(
+                            text = stringResource(screen.stringId),
+                            color = AppTheme.colors.fontPrimary
+                        )
+                    }
                 },
                 selected = currentDestination?.hierarchy?.any { it.route == screen.routeName } == true,
                 onClick = {
@@ -82,9 +97,38 @@ sealed class BottomNavRoute(
     var id: Int,
     var id2: Int
 ) {
-    object Explore : BottomNavRoute(RouteName.EXPLORE, R.string.community, R.drawable.icon_explore, R.drawable.icon_explore_fill)
-    object Service : BottomNavRoute(RouteName.SERVICE, R.string.service, R.drawable.icon_service, R.drawable.icon_service_fill)
-    object Vehicle : BottomNavRoute(RouteName.VEHICLE, R.string.vehicle, R.drawable.icon_vehicle, R.drawable.icon_vehicle_fill)
-    object Mall : BottomNavRoute(RouteName.MALL, R.string.mall, R.drawable.icon_mall, R.drawable.icon_mall_fill)
-    object My : BottomNavRoute(RouteName.MY, R.string.my, R.drawable.icon_person, R.drawable.icon_person_fill)
+    object Explore : BottomNavRoute(
+        RouteName.EXPLORE,
+        R.string.community,
+        R.drawable.icon_explore,
+        R.drawable.icon_explore_fill
+    )
+
+    object Service : BottomNavRoute(
+        RouteName.SERVICE,
+        R.string.service,
+        R.drawable.icon_service,
+        R.drawable.icon_service_fill
+    )
+
+    object Vehicle : BottomNavRoute(
+        RouteName.VEHICLE,
+        R.string.vehicle,
+        R.drawable.icon_vehicle,
+        R.drawable.icon_vehicle_fill
+    )
+
+    object Mall : BottomNavRoute(
+        RouteName.MALL,
+        R.string.mall,
+        R.drawable.icon_mall,
+        R.drawable.icon_mall_fill
+    )
+
+    object My : BottomNavRoute(
+        RouteName.MY,
+        R.string.my,
+        R.drawable.icon_person,
+        R.drawable.icon_person_fill
+    )
 }
