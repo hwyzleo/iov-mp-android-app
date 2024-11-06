@@ -17,7 +17,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -25,7 +24,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import net.hwyz.iov.mp.app.R
 import net.hwyz.iov.mp.app.data.bean.SaleModelConfig
 import net.hwyz.iov.mp.app.module.marketing.intent.VehicleModelConfigIntent
 import net.hwyz.iov.mp.app.theme.AppTheme
@@ -43,13 +41,12 @@ fun VehicleModelConfigPageSpareTire(
     selectSpareTire: String,
     intent: (VehicleModelConfigIntent) -> Unit
 ) {
-    var firstSpareTire = ""
     Box(
         modifier = Modifier
             .background(AppTheme.colors.themeUi)
             .onGloballyPositioned {
-                if (selectSpareTire == "") {
-                    intent(VehicleModelConfigIntent.OnTapSpareTire(code = firstSpareTire))
+                if (selectSpareTire == "" && spareTires.isNotEmpty()) {
+                    intent(VehicleModelConfigIntent.OnTapSpareTire(code = spareTires.first().typeCode))
                 }
             }
     ) {
@@ -97,9 +94,6 @@ fun VehicleModelConfigPageSpareTire(
                             color = AppTheme.colors.fontSecondary
                         )
                     }
-                }
-                if (firstSpareTire == "") {
-                    firstSpareTire = spareTire.typeCode
                 }
                 Spacer(modifier = Modifier.height(10.dp))
             }

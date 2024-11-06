@@ -94,10 +94,18 @@ fun VehicleModelConfigPageContent(
                         intent = intent
                     )
 
-                    3 -> VehicleModelConfigPageWheel(navCtrl = navCtrl, wheels = viewStates.wheels)
+                    3 -> VehicleModelConfigPageWheel(
+                        navCtrl = navCtrl,
+                        wheels = viewStates.wheels,
+                        selectWheel = viewStates.selectWheel,
+                        intent = intent
+                    )
+
                     4 -> VehicleModelConfigPageInterior(
                         navCtrl = navCtrl,
-                        interiors = viewStates.interiors
+                        interiors = viewStates.interiors,
+                        selectInterior = viewStates.selectInterior,
+                        intent = intent
                     )
 
                     5 -> VehicleModelConfigPageAdas(

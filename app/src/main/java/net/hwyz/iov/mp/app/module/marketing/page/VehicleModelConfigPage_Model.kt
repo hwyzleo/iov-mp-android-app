@@ -17,7 +17,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -25,7 +24,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import net.hwyz.iov.mp.app.R
 import net.hwyz.iov.mp.app.data.bean.SaleModelConfig
 import net.hwyz.iov.mp.app.module.marketing.intent.VehicleModelConfigIntent
 import net.hwyz.iov.mp.app.theme.AppTheme
@@ -43,19 +41,16 @@ fun VehicleModelConfigPageModel(
     selectModel: String,
     intent: (VehicleModelConfigIntent) -> Unit
 ) {
-    var firstModel = ""
-    var firstModelName = ""
-    var firstModelPrice = BigDecimal.ZERO
     Box(
         modifier = Modifier
             .background(AppTheme.colors.themeUi)
             .onGloballyPositioned {
-                if (selectModel == "") {
+                if (selectModel == "" && models.isNotEmpty()) {
                     intent(
                         VehicleModelConfigIntent.OnTapModel(
-                            code = firstModel,
-                            name = firstModelName,
-                            price = firstModelPrice
+                            code = models.first().typeCode,
+                            name = models.first().typeName,
+                            price = models.first().typePrice
                         )
                     )
                 }
@@ -107,11 +102,6 @@ fun VehicleModelConfigPageModel(
                             color = AppTheme.colors.fontSecondary
                         )
                     }
-                }
-                if (firstModel == "") {
-                    firstModel = model.typeCode
-                    firstModelName = model.typeName
-                    firstModelPrice = model.typePrice
                 }
                 Spacer(modifier = Modifier.height(10.dp))
             }

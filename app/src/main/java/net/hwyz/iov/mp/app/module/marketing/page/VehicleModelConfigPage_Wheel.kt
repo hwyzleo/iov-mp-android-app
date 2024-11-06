@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -23,6 +24,7 @@ import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import net.hwyz.iov.mp.app.data.bean.SaleModelConfig
+import net.hwyz.iov.mp.app.module.marketing.intent.VehicleModelConfigIntent
 import net.hwyz.iov.mp.app.theme.AppTheme
 import java.math.BigDecimal
 
@@ -34,13 +36,20 @@ import java.math.BigDecimal
 @Composable
 fun VehicleModelConfigPageWheel(
     navCtrl: NavHostController,
-    wheels: List<SaleModelConfig>
+    wheels: List<SaleModelConfig>,
+    selectWheel: String,
+    intent: (VehicleModelConfigIntent) -> Unit
 ) {
     Box(
         modifier = Modifier
             .background(AppTheme.colors.themeUi)
+            .onGloballyPositioned {
+                if (selectWheel == "" && wheels.isNotEmpty()) {
+                    intent(VehicleModelConfigIntent.OnTapWheel(code = wheels.first().typeCode))
+                }
+            }
     ) {
-        var selectedTabIndex = remember { mutableStateOf(0) }
+        val selectedTabIndex = remember { mutableStateOf(0) }
         Column {
             wheels.forEachIndexed { index, wheel ->
                 if (selectedTabIndex.value == index) {
@@ -61,7 +70,10 @@ fun VehicleModelConfigPageWheel(
                 wheels.forEachIndexed { index, exterior ->
                     Text(
                         exterior.typeName,
-                        modifier = Modifier.clickable { selectedTabIndex.value = index },
+                        modifier = Modifier.clickable {
+                            selectedTabIndex.value = index
+                            intent(VehicleModelConfigIntent.OnTapWheel(code = exterior.typeCode))
+                        },
                         fontWeight = if (selectedTabIndex.value == index) FontWeight.Bold else FontWeight.Normal,
                     )
                     Spacer(modifier = Modifier.weight(1f))
@@ -97,6 +109,8 @@ fun VehicleModelConfigPageWheelPreview() {
                 typeDesc = "标配倍耐力Scorpion轮胎",
                 typeParam = ""
             )
-        )
+        ),
+        selectWheel = "",
+        intent = {}
     )
 }

@@ -36,12 +36,34 @@ class VehicleModelConfigViewModel @Inject constructor(
                 listOf()
             }
 
+            is VehicleModelConfigIntent.OnTapExterior -> {
+                viewStates = viewStates.copy(
+                    selectExterior = intent.code
+                )
+                listOf()
+            }
+
+            is VehicleModelConfigIntent.OnTapWheel -> {
+                viewStates = viewStates.copy(
+                    selectWheel = intent.code
+                )
+                listOf()
+            }
+
+            is VehicleModelConfigIntent.OnTapInterior -> {
+                viewStates = viewStates.copy(
+                    selectInterior = intent.code
+                )
+                listOf()
+            }
+
             is VehicleModelConfigIntent.OnTapAdas -> {
                 viewStates = viewStates.copy(
                     selectAdas = intent.code
                 )
                 listOf()
             }
+
         }
     }
 

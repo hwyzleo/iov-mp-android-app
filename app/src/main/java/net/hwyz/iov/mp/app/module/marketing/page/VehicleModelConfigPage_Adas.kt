@@ -17,7 +17,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -25,7 +24,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import net.hwyz.iov.mp.app.R
 import net.hwyz.iov.mp.app.data.bean.SaleModelConfig
 import net.hwyz.iov.mp.app.module.marketing.intent.VehicleModelConfigIntent
 import net.hwyz.iov.mp.app.theme.AppTheme
@@ -43,13 +41,12 @@ fun VehicleModelConfigPageAdas(
     selectAdas: String,
     intent: (VehicleModelConfigIntent) -> Unit
 ) {
-    var firstAdas = ""
     Box(
         modifier = Modifier
             .background(AppTheme.colors.themeUi)
             .onGloballyPositioned {
-                if (selectAdas == "") {
-                    intent(VehicleModelConfigIntent.OnTapAdas(code = firstAdas))
+                if (selectAdas == "" && adases.isNotEmpty()) {
+                    intent(VehicleModelConfigIntent.OnTapAdas(code = adases.first().typeCode))
                 }
             }
     ) {
@@ -97,9 +94,6 @@ fun VehicleModelConfigPageAdas(
                             color = AppTheme.colors.fontSecondary
                         )
                     }
-                }
-                if (firstAdas == "") {
-                    firstAdas = adas.typeCode
                 }
                 Spacer(modifier = Modifier.height(10.dp))
             }

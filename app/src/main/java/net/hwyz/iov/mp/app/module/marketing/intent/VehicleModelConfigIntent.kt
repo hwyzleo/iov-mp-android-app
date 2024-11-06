@@ -14,6 +14,15 @@ sealed class VehicleModelConfigIntent : MviIntent {
     // 点击备胎
     data class OnTapSpareTire(val code: String) : VehicleModelConfigIntent()
 
+    // 点击外饰
+    data class OnTapExterior(val code: String) : VehicleModelConfigIntent()
+
+    // 点击车轮
+    data class OnTapWheel(val code: String) : VehicleModelConfigIntent()
+
+    // 点击内饰
+    data class OnTapInterior(val code: String) : VehicleModelConfigIntent()
+
     // 点击智驾
     data class OnTapAdas(val code: String) : VehicleModelConfigIntent()
 }

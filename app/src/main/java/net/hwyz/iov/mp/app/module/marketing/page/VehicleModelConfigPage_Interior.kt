@@ -2,7 +2,6 @@ package net.hwyz.iov.mp.app.module.marketing.page
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,44 +11,25 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ScaffoldState
-import androidx.compose.material.Tab
-import androidx.compose.material.TabRow
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.BlurredEdgeTreatment.Companion.Rectangle
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import cn.jpush.android.cache.Sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import net.hwyz.iov.mp.app.R
-import net.hwyz.iov.mp.app.component.bar.TopBackTitleBar
-import net.hwyz.iov.mp.app.component.button.RoundedCornerButton
 import net.hwyz.iov.mp.app.data.bean.SaleModelConfig
 import net.hwyz.iov.mp.app.module.marketing.intent.VehicleModelConfigIntent
-import net.hwyz.iov.mp.app.module.marketing.viewmodel.VehicleModelConfigViewModel
 import net.hwyz.iov.mp.app.theme.AppTheme
-import net.hwyz.iov.mp.app.utils.RouteUtils.back
 import java.math.BigDecimal
 
 /**
@@ -60,13 +40,20 @@ import java.math.BigDecimal
 @Composable
 fun VehicleModelConfigPageInterior(
     navCtrl: NavHostController,
-    interiors: List<SaleModelConfig>
+    interiors: List<SaleModelConfig>,
+    selectInterior: String,
+    intent: (VehicleModelConfigIntent) -> Unit
 ) {
     Box(
         modifier = Modifier
             .background(AppTheme.colors.themeUi)
+            .onGloballyPositioned {
+                if (selectInterior == "" && interiors.isNotEmpty()) {
+                    intent(VehicleModelConfigIntent.OnTapInterior(code = interiors.first().typeCode))
+                }
+            }
     ) {
-        var selectedTabIndex = remember { mutableStateOf(0) }
+        val selectedTabIndex = remember { mutableStateOf(0) }
         Column {
             interiors.forEachIndexed { index, interior ->
                 if (selectedTabIndex.value == index) {
@@ -107,7 +94,7 @@ fun VehicleModelConfigPageInterior(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Spacer(modifier = Modifier.weight(1f))
-                interiors.forEachIndexed { index, exterior ->
+                interiors.forEachIndexed { index, interior ->
                     Box(contentAlignment = Alignment.Center) {
                         if (selectedTabIndex.value == index) {
                             Canvas(
@@ -116,7 +103,7 @@ fun VehicleModelConfigPageInterior(
                                     .clickable { }
                             ) {
                                 drawCircle(
-                                    color = Color(android.graphics.Color.parseColor(exterior.typeParam)),
+                                    color = Color(android.graphics.Color.parseColor(interior.typeParam)),
                                     radius = size.width / 2,
                                 )
                             }
@@ -147,10 +134,11 @@ fun VehicleModelConfigPageInterior(
                                 .size(20.dp)
                                 .clickable {
                                     selectedTabIndex.value = index
+                                    intent(VehicleModelConfigIntent.OnTapInterior(code = interior.typeCode))
                                 }
                         ) {
                             drawCircle(
-                                color = Color(android.graphics.Color.parseColor(exterior.typeParam)),
+                                color = Color(android.graphics.Color.parseColor(interior.typeParam)),
                                 radius = size.width / 2
                             )
                         }
@@ -198,6 +186,8 @@ fun VehicleModelConfigPageInteriorPreview() {
                 typeDesc = "",
                 typeParam = "#424141"
             )
-        )
+        ),
+        selectInterior = "",
+        intent = {}
     )
 }
