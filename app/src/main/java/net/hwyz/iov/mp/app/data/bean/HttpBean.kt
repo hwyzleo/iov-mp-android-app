@@ -124,21 +124,21 @@ data class Wishlist(
     // 销售代码
     var saleCode: String,
     // 订单号
-    var orderNum: String,
+    var orderNum: String?,
     // 销售车型配置类型
     var saleModelConfigType: Map<String, String>,
     // 销售车型配置名称
-    var saleModelConfigName: Map<String, String>,
+    var saleModelConfigName: Map<String, String>?,
     // 销售车型配置价格
-    var saleModelConfigPrice: Map<String, BigDecimal>,
+    var saleModelConfigPrice: Map<String, BigDecimal>?,
     // 销售车型图片集
-    var saleModelImages: List<String>,
+    var saleModelImages: List<String>?,
     // 销售车型描述
-    var saleModelDesc: String,
+    var saleModelDesc: String?,
     // 总价格
-    var totalPrice: BigDecimal,
+    var totalPrice: BigDecimal?,
     // 是否有效
-    var isValid: Boolean
+    var isValid: Boolean?
 ) : Parcelable
 
 /**

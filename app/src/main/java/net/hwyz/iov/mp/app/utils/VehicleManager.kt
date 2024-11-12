@@ -123,6 +123,32 @@ object VehicleManager {
 }
 
 /**
+ * 订单状态
+ */
+enum class OrderState(val code: Int) {
+    // 心愿单
+    WISHLIST(100),
+    // 意向金待支付
+    EARNEST_MONEY_UNPAID(200),
+    // 意向金已支付
+    EARNEST_MONEY_PAID(210),
+    // 定金待支付
+    DOWN_PAYMENT_UNPAID(300),
+    // 定金已支付
+    DOWN_PAYMENT_PAID(310),
+    // 安排生产
+    ARRANGE_PRODUCTION(400),
+    // 待运输
+    PREPARE_TRANSPORT(500),
+    // 待交付
+    PREPARE_DELIVER(600),
+    // 已交付
+    DELIVERED(650),
+    // 已激活
+    ACTIVATED(700)
+}
+
+/**
  * 车辆类型
  */
 enum class VehicleType {

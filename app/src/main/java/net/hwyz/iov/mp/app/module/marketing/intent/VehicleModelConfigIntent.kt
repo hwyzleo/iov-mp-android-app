@@ -25,4 +25,16 @@ sealed class VehicleModelConfigIntent : MviIntent {
 
     // 点击智驾
     data class OnTapAdas(val code: String) : VehicleModelConfigIntent()
+
+    // 点击保存心愿单
+    data class OnTapSaveWishlist(
+        val saleCode: String,
+        val modelCode: String,
+        val modelName: String,
+        val spareTireCode: String,
+        val exteriorCode: String,
+        val wheelCode: String,
+        val interiorCode: String,
+        val adasCode: String
+    ) : VehicleModelConfigIntent()
 }

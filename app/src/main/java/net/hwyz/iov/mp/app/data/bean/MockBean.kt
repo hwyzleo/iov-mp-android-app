@@ -1,5 +1,6 @@
 package net.hwyz.iov.mp.app.data.bean
 
+import net.hwyz.iov.mp.app.utils.GlobalStateManager
 import java.math.BigDecimal
 
 // 通用TSP响应
@@ -32,7 +33,7 @@ fun mockLoginResponse(): LoginResponse = LoginResponse(
 fun mockVehicleSaleOrderList(): List<VehicleSaleOrder> = listOf(
     VehicleSaleOrder(
         orderNum = "ORDERNUM001",
-        orderState = 1,
+        orderState = GlobalStateManager.mockOrderState.code,
         displayName = "寒01七座版"
     )
 )
@@ -60,12 +61,24 @@ fun mockSaleModelList(): List<SaleModelConfig> = listOf(
         listOf("https://pic.imgdb.cn/item/670688dbd29ded1a8cbc1321.png"), "", "#424141"
     ),
     SaleModelConfig(
-        "H01", "WHEEL", "CL04", "21寸轮毂(四季胎)枪灰色", BigDecimal.valueOf(0),
-        listOf("https://pic.imgdb.cn/item/67067e41d29ded1a8cb3ac99.png"), "标配倍耐力Scorpion轮胎", ""
+        "H01",
+        "WHEEL",
+        "CL04",
+        "21寸轮毂(四季胎)枪灰色",
+        BigDecimal.valueOf(0),
+        listOf("https://pic.imgdb.cn/item/67067e41d29ded1a8cb3ac99.png"),
+        "标配倍耐力Scorpion轮胎",
+        ""
     ),
     SaleModelConfig(
-        "H01", "WHEEL", "CL03", "21寸轮毂(四季胎)高亮黑", BigDecimal.valueOf(0),
-        listOf("https://pic.imgdb.cn/item/67067e41d29ded1a8cb3ac99.png"), "标配倍耐力Scorpion轮胎", ""
+        "H01",
+        "WHEEL",
+        "CL03",
+        "21寸轮毂(四季胎)高亮黑",
+        BigDecimal.valueOf(0),
+        listOf("https://pic.imgdb.cn/item/67067e41d29ded1a8cb3ac99.png"),
+        "标配倍耐力Scorpion轮胎",
+        ""
     ),
     SaleModelConfig(
         "H01", "EXTERIOR", "WS06", "冰川白车漆", BigDecimal.valueOf(0),
@@ -100,11 +113,59 @@ fun mockSaleModelList(): List<SaleModelConfig> = listOf(
         listOf("https://pic.imgdb.cn/item/670674cfd29ded1a8cac9cb3.png"), "车长5050毫米", ""
     ),
     SaleModelConfig(
-        "H01", "MODEL", "H0106", "寒01六座版", BigDecimal.valueOf(88888),
-        listOf("https://pic.imgdb.cn/item/67065c4fd29ded1a8c9a3714.png"), "2-2-2六座，双侧零重力航空座椅，行政奢华", ""
+        "H01",
+        "MODEL",
+        "H0106",
+        "寒01六座版",
+        BigDecimal.valueOf(88888),
+        listOf("https://pic.imgdb.cn/item/67065c4fd29ded1a8c9a3714.png"),
+        "2-2-2六座，双侧零重力航空座椅，行政奢华",
+        ""
     ),
     SaleModelConfig(
-        "H01", "MODEL", "H0107", "寒01七座版", BigDecimal.valueOf(88888),
-        listOf("https://pic.imgdb.cn/item/67065c4fd29ded1a8c9a3714.png"), "2-2-3七座，二排超宽通道，二三排可放平", ""
+        "H01",
+        "MODEL",
+        "H0107",
+        "寒01七座版",
+        BigDecimal.valueOf(88888),
+        listOf("https://pic.imgdb.cn/item/67065c4fd29ded1a8c9a3714.png"),
+        "2-2-3七座，二排超宽通道，二三排可放平",
+        ""
     )
+)
+
+// 心愿单
+fun mockWishlist(): Wishlist = Wishlist(
+    "H01", "ORDERNUM001",
+    mapOf(
+        "ADAS" to "X02",
+        "WHEEL" to "CL03",
+        "EXTERIOR" to "WS02",
+        "INTERIOR" to "NS01",
+        "MODEL" to "H0107",
+        "SPARE_TIRE" to "X00"
+    ),
+    mapOf(
+        "ADAS" to "高阶智驾",
+        "WHEEL" to "21寸轮毂(四季胎)高亮黑",
+        "EXTERIOR" to "翡翠绿车漆",
+        "INTERIOR" to "乌木黑内饰",
+        "MODEL" to "寒01七座版",
+        "SPARE_TIRE" to "无备胎"
+    ),
+    mapOf(
+        "ADAS" to BigDecimal.valueOf(10000.00),
+        "WHEEL" to BigDecimal.valueOf(0.00),
+        "EXTERIOR" to BigDecimal.valueOf(0.00),
+        "INTERIOR" to BigDecimal.valueOf(0.00),
+        "MODEL" to BigDecimal.valueOf(188888.00),
+        "SPARE_TIRE" to BigDecimal.valueOf(0.00)
+    ),
+    listOf(
+        "https://pic.imgdb.cn/item/67065c4fd29ded1a8c9a3714.png",
+        "https://pic.imgdb.cn/item/670685e4d29ded1a8cb9c55f.png"
+    ),
+    "七座 | 有备胎 | 翡翠绿车漆 | 21寸轮毂(四季胎)高亮黑 | 乌木黑内饰 | 高阶智驾",
+    BigDecimal.valueOf(198888.00),
+    true
 )

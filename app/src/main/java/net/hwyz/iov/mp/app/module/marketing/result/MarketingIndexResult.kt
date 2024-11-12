@@ -5,21 +5,12 @@ import net.hwyz.iov.mp.app.data.bean.Order
 import net.hwyz.iov.mp.app.data.bean.Wishlist
 
 sealed class MarketingIndexResult : MviResult {
-    /**
-     * 显示心愿单
-     */
-    object DisplayWishlist : MarketingIndexResult() {
-        data class Success(val wishlist: Wishlist) : MarketingIndexResult()
+    // 显示心愿单
+    data class DisplayWishlist(val wishlist: Wishlist) : MarketingIndexResult()
 
-        data class Failure(val error: Throwable) : MarketingIndexResult()
-    }
+    // 显示订单
+    data class DisplayOrder(val order: Order) : MarketingIndexResult()
 
-    /**
-     * 显示订单
-     */
-    object DisplayOrder : MarketingIndexResult() {
-        data class Success(val order: Order) : MarketingIndexResult()
-
-        data class Failure(val error: Throwable) : MarketingIndexResult()
-    }
+    // 失败
+    data class Failure(val error: Throwable) : MarketingIndexResult()
 }

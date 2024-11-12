@@ -26,7 +26,7 @@ open class MarketingIndexProcessor @Inject constructor(
                                     VehicleType.WISHLIST -> {
                                         val wishlist = service.getWishlist(it.id)
                                         if (wishlist.code == 0) {
-                                            MarketingIndexResult.DisplayWishlist.Success(wishlist.data!!)
+                                            return MarketingIndexResult.DisplayWishlist(wishlist.data!!)
                                         } else {
                                             throw Exception(response.message)
                                         }
@@ -35,7 +35,7 @@ open class MarketingIndexProcessor @Inject constructor(
                                     VehicleType.ACTIVATED -> {
                                         val order = service.getOrder(it.id)
                                         if (order.code == 0) {
-                                            MarketingIndexResult.DisplayOrder.Success(order.data!!)
+                                            MarketingIndexResult.DisplayOrder(order.data!!)
                                         } else {
                                             throw Exception(response.message)
                                         }
@@ -52,7 +52,7 @@ open class MarketingIndexProcessor @Inject constructor(
                         throw Exception(response.message)
                     }
                 } catch (e: Exception) {
-                    MarketingIndexResult.DisplayOrder.Failure(e)
+                    MarketingIndexResult.Failure(e)
                 }
             }
         }

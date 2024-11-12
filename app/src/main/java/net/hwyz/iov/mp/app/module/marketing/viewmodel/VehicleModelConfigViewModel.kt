@@ -4,6 +4,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
 import net.hwyz.iov.mp.app.base.presentation.BaseViewModel
 import net.hwyz.iov.mp.app.module.marketing.action.VehicleModelConfigAction
 import net.hwyz.iov.mp.app.module.marketing.intent.VehicleModelConfigIntent
@@ -17,7 +19,8 @@ class VehicleModelConfigViewModel @Inject constructor(
     override val actionProcessor: VehicleModelConfigProcessor
 ) : BaseViewModel<VehicleModelConfigIntent, VehicleModelConfigState, VehicleModelConfigAction, VehicleModelConfigResult>() {
     var viewStates by mutableStateOf(VehicleModelConfigState())
-        private set
+    private val _viewEvents = Channel<VehicleModelConfigViewEvent>(Channel.BUFFERED)
+    val viewEvents = _viewEvents.receiveAsFlow()
 
     override fun actionFromIntent(intent: VehicleModelConfigIntent): List<VehicleModelConfigAction> {
         return when (intent) {
@@ -64,13 +67,26 @@ class VehicleModelConfigViewModel @Inject constructor(
                 listOf()
             }
 
+            is VehicleModelConfigIntent.OnTapSaveWishlist -> {
+                listOf(
+                    VehicleModelConfigAction.SaveWishlist(
+                        intent.saleCode,
+                        intent.modelCode,
+                        intent.modelName,
+                        intent.spareTireCode,
+                        intent.exteriorCode,
+                        intent.wheelCode,
+                        intent.interiorCode,
+                        intent.adasCode
+                    )
+                )
+            }
         }
     }
 
     override suspend fun reducer(result: VehicleModelConfigResult) {
         when (result) {
-            VehicleModelConfigResult.DefaultResult -> {}
-            is VehicleModelConfigResult.UpdateSaleModel.Success -> {
+            is VehicleModelConfigResult.UpdateSaleModel -> {
                 viewStates.saleCode = result.saleCode
                 viewStates.models.clear()
                 viewStates.spareTires.clear()
@@ -90,11 +106,27 @@ class VehicleModelConfigViewModel @Inject constructor(
                 }
             }
 
-            is VehicleModelConfigResult.UpdateSaleModel.Failure -> TODO()
-            VehicleModelConfigResult.UpdateSaleModel -> TODO()
+            VehicleModelConfigResult.BackToIndex -> {
+                _viewEvents.send(VehicleModelConfigViewEvent.PopBack)
+            }
+
+            is VehicleModelConfigResult.Failure -> {
+                _viewEvents.send(
+                    VehicleModelConfigViewEvent.ErrorMessage(
+                        result.error.message ?: "系统异常"
+                    )
+                )
+            }
 
         }
     }
 
+}
 
+/**
+ * 一次性事件
+ */
+sealed class VehicleModelConfigViewEvent {
+    object PopBack : VehicleModelConfigViewEvent()
+    data class ErrorMessage(val message: String) : VehicleModelConfigViewEvent()
 }

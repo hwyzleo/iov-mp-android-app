@@ -6,7 +6,11 @@ import net.hwyz.iov.mp.app.data.bean.TspResponse
 import net.hwyz.iov.mp.app.data.bean.mockLoginResponse
 import net.hwyz.iov.mp.app.data.bean.mockSaleModelList
 import net.hwyz.iov.mp.app.data.bean.mockTspResponse
+import net.hwyz.iov.mp.app.data.bean.mockVehicleSaleOrderList
+import net.hwyz.iov.mp.app.data.bean.mockWishlist
 import net.hwyz.iov.mp.app.utils.GlobalStateManager
+import net.hwyz.iov.mp.app.utils.OrderState
+import net.hwyz.iov.mp.app.utils.VehicleType
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.Protocol
@@ -42,6 +46,22 @@ class MockInterceptor : Interceptor {
 
                 Regex("/mp/saleModel/.*").matches(path) -> {
                     responseBody = gson.toJson(mockTspResponse(mockSaleModelList()))
+                        .toResponseBody("application/json".toMediaTypeOrNull())
+                }
+
+                Regex("/mp/vehicleSaleOrder/wishlist/action/(create|modify)").matches(path) -> {
+                    GlobalStateManager.mockOrderState = OrderState.WISHLIST
+                    responseBody = gson.toJson(mockTspResponse("ORDERNUM001"))
+                        .toResponseBody("application/json".toMediaTypeOrNull())
+                }
+
+                Regex("/mp/vehicleSaleOrder/wishlist/.*").matches(path) -> {
+                    responseBody = gson.toJson(mockTspResponse(mockWishlist()))
+                        .toResponseBody("application/json".toMediaTypeOrNull())
+                }
+
+                Regex("/mp/vehicleSaleOrder/order").matches(path) -> {
+                    responseBody = gson.toJson(mockTspResponse(mockVehicleSaleOrderList()))
                         .toResponseBody("application/json".toMediaTypeOrNull())
                 }
 

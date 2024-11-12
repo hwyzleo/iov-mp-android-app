@@ -14,21 +14,29 @@ import androidx.compose.material.TabRow
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import net.hwyz.iov.mp.app.component.bar.SNACK_ERROR
 import net.hwyz.iov.mp.app.component.bar.TopBackTitleBar
+import net.hwyz.iov.mp.app.component.bar.popupSnackBar
 import net.hwyz.iov.mp.app.component.button.RoundedCornerButton
 import net.hwyz.iov.mp.app.data.bean.SaleModelConfig
+import net.hwyz.iov.mp.app.module.login.LoginViewEvent
 import net.hwyz.iov.mp.app.module.marketing.intent.VehicleModelConfigIntent
 import net.hwyz.iov.mp.app.module.marketing.state.VehicleModelConfigState
+import net.hwyz.iov.mp.app.module.marketing.viewmodel.VehicleModelConfigViewEvent
 import net.hwyz.iov.mp.app.module.marketing.viewmodel.VehicleModelConfigViewModel
 import net.hwyz.iov.mp.app.theme.AppTheme
 import net.hwyz.iov.mp.app.utils.RouteUtils.back
@@ -46,6 +54,18 @@ fun VehicleModelConfigPage(
     viewModel: VehicleModelConfigViewModel = hiltViewModel()
 ) {
     val viewStates = viewModel.viewStates
+    val coroutineState = rememberCoroutineScope()
+    val events by viewModel.viewEvents.collectAsState(initial = null)
+    LaunchedEffect(events) {
+        events?.let { event ->
+            when (event) {
+                is VehicleModelConfigViewEvent.PopBack -> navCtrl.popBackStack()
+                is VehicleModelConfigViewEvent.ErrorMessage -> {
+                    popupSnackBar(coroutineState, scaffoldState, label = SNACK_ERROR, event.message)
+                }
+            }
+        }
+    }
     LaunchedEffect(Unit) {
         viewModel.intent(VehicleModelConfigIntent.OnLaunched)
     }
@@ -136,7 +156,18 @@ fun VehicleModelConfigPageContent(
                     Text("￥88888", fontSize = 18.sp, modifier = Modifier.padding(top = 6.dp))
                     Spacer(modifier = Modifier.weight(1f))
                     RoundedCornerButton(text = "保存心愿单", modifier = Modifier.width(120.dp)) {
-
+                        intent(
+                            VehicleModelConfigIntent.OnTapSaveWishlist(
+                                viewStates.saleCode,
+                                viewStates.selectModel,
+                                viewStates.selectModelName,
+                                viewStates.selectSpareTire,
+                                viewStates.selectExterior,
+                                viewStates.selectWheel,
+                                viewStates.selectInterior,
+                                viewStates.selectAdas
+                            )
+                        )
                     }
                     Spacer(modifier = Modifier.weight(1f))
                     RoundedCornerButton(
