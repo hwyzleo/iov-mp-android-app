@@ -1,6 +1,9 @@
 package net.hwyz.iov.mp.app.utils
 
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import net.hwyz.iov.mp.app.data.bean.VehicleSaleOrder
+import net.hwyz.iov.mp.app.data.store.DataStoreUtils
 
 /**
  * 车辆管理类
@@ -13,6 +16,22 @@ object VehicleManager {
 
     // 当前车辆id
     private var currentVehicleId: String? = null
+
+    /**
+     * 初始化
+     */
+    fun initialize() {
+        val savedVehicles = DataStoreUtils.readStringData("vehicles", "[]")
+        val gson = Gson()
+        vehicles = gson.fromJson(
+            savedVehicles,
+            object : TypeToken<MutableMap<String, VehiclePo>>() {}.type
+        )
+        currentVehicleId = DataStoreUtils.readStringData("currentVehicleId", "")
+        if (currentVehicleId == "" && vehicles.isNotEmpty()) {
+            setCurrentVehicleId(vehicles.keys.first())
+        }
+    }
 
     /**
      * 是否拥有车辆
@@ -38,6 +57,7 @@ object VehicleManager {
      */
     fun setCurrentVehicleId(id: String) {
         currentVehicleId = id
+        DataStoreUtils.saveSyncStringData("currentVehicleId", id)
     }
 
     /**
@@ -112,6 +132,8 @@ object VehicleManager {
             this.type = type
             this.displayName = displayName
         }
+        val gson = Gson()
+        DataStoreUtils.saveSyncStringData("vehicles", gson.toJson(vehicles))
     }
 
     /**
@@ -119,6 +141,7 @@ object VehicleManager {
      */
     private fun clear() {
         vehicles.clear()
+        DataStoreUtils.saveSyncStringData("vehicles", "[]")
     }
 }
 
@@ -128,22 +151,31 @@ object VehicleManager {
 enum class OrderState(val code: Int) {
     // 心愿单
     WISHLIST(100),
+
     // 意向金待支付
     EARNEST_MONEY_UNPAID(200),
+
     // 意向金已支付
     EARNEST_MONEY_PAID(210),
+
     // 定金待支付
     DOWN_PAYMENT_UNPAID(300),
+
     // 定金已支付
     DOWN_PAYMENT_PAID(310),
+
     // 安排生产
     ARRANGE_PRODUCTION(400),
+
     // 待运输
     PREPARE_TRANSPORT(500),
+
     // 待交付
     PREPARE_DELIVER(600),
+
     // 已交付
     DELIVERED(650),
+
     // 已激活
     ACTIVATED(700)
 }
