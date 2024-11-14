@@ -27,6 +27,7 @@ import net.hwyz.iov.mp.app.component.view.EmptyView
 import net.hwyz.iov.mp.app.module.login.LoginPage
 import net.hwyz.iov.mp.app.module.marketing.page.MarketingIndexPage
 import net.hwyz.iov.mp.app.module.marketing.page.VehicleModelConfigPage
+import net.hwyz.iov.mp.app.module.marketing.page.VehicleOrderDetailPage
 import net.hwyz.iov.mp.app.module.my.page.MyPage
 import net.hwyz.iov.mp.app.module.my.page.MySettingPage
 import net.hwyz.iov.mp.app.module.my.profile.ProfileView
@@ -129,6 +130,10 @@ fun HomeEntry() {
                         composable(route = RouteName.MODEL_CONFIG) {
                             VehicleModelConfigPage(navCtrl, scaffoldState)
                         }
+                        // 订单详情
+                        composable(route = RouteName.ORDER_DETAIL) {
+                            VehicleOrderDetailPage(navCtrl, scaffoldState)
+                        }
                     }
                 },
                 snackbarHost = {
@@ -155,4 +160,5 @@ object RouteName {
     const val PROFILE = "profile"
     const val LOGIN = "login"
     const val MODEL_CONFIG = "model_config"
+    const val ORDER_DETAIL = "order_detail"
 }

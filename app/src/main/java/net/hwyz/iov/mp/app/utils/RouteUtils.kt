@@ -1,7 +1,6 @@
 package net.hwyz.iov.mp.app.utils
 
 import android.net.Uri
-import android.os.Bundle
 import android.os.Parcelable
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -13,11 +12,6 @@ import timber.log.Timber
  * @author hwyz_leo
  */
 object RouteUtils {
-
-    const val STEAD_SYMBOL = "^0^"
-
-    //初始化Bundle参数
-    fun initBundle(params: Parcelable) = Bundle().apply { putParcelable(ARGS, params) }
 
     /**
      * 导航到某个页面
@@ -85,14 +79,5 @@ object RouteUtils {
             navCtrl.findDestination(routeName)?.id ?: defaultId
         }
     }
-
-    fun <T> getArguments(navCtrl: NavHostController): T? {
-        return navCtrl.previousBackStackEntry?.arguments?.getParcelable(ARGS)
-    }
-
-    /**
-     * 各个序列化的参数类的key名
-     */
-    private const val ARGS = "args"
 
 }

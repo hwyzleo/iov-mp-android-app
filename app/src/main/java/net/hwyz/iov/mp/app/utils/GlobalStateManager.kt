@@ -12,4 +12,6 @@ object GlobalStateManager {
     var mockOrderState: OrderState = OrderState.WISHLIST
     // API地址
     var apiUrl: String = "http://192.168.2.223:8081"
+    // 参数传递
+    var parameters: Map<String, Any> = mutableMapOf()
 }
